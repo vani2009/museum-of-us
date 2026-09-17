@@ -620,4 +620,79 @@ export function createCakeFrostingTexture() {
   return texture;
 }
 
+export function createRococoFrameTexture(baseColor = '#FFD1DC', goldColor = '#E8A598') {
+  const canvas = document.createElement('canvas');
+  canvas.width = 512;
+  canvas.height = 512;
+  const ctx = canvas.getContext('2d');
+
+  // Soft pastel pink lacquer base
+  ctx.fillStyle = baseColor;
+  ctx.fillRect(0, 0, 512, 512);
+
+  // Subtle marble / porcelain sheen
+  const grad = ctx.createLinearGradient(0, 0, 512, 512);
+  grad.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
+  grad.addColorStop(0.5, 'rgba(232, 165, 152, 0.1)');
+  grad.addColorStop(1, 'rgba(255, 255, 255, 0.3)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 512, 512);
+
+  // Embossed gold rococo floral arabesque motifs
+  ctx.strokeStyle = goldColor;
+  ctx.lineWidth = 3.5;
+  ctx.lineCap = 'round';
+
+  for (let y = 32; y < 512; y += 64) {
+    for (let x = 32; x < 512; x += 64) {
+      ctx.save();
+      ctx.translate(x, y);
+
+      // Swirl leaf
+      ctx.beginPath();
+      ctx.arc(0, 0, 14, 0, Math.PI * 1.5, false);
+      ctx.stroke();
+
+      // Flower petal
+      ctx.fillStyle = '#FFFDFE';
+      ctx.beginPath();
+      ctx.arc(4, 4, 3, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Gold bead
+      ctx.fillStyle = goldColor;
+      ctx.beginPath();
+      ctx.arc(0, 0, 2.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+    }
+  }
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.wrapT = THREE.RepeatWrapping;
+  texture.repeat.set(2, 2);
+  return texture;
+}
+
+export function createPearlTexture() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 128;
+  canvas.height = 128;
+  const ctx = canvas.getContext('2d');
+
+  // Pearl iridescence radial gradient
+  const rad = ctx.createRadialGradient(48, 48, 4, 64, 64, 64);
+  rad.addColorStop(0, '#FFFFFF');
+  rad.addColorStop(0.3, '#FFF6F8');
+  rad.addColorStop(0.7, '#E8D5EA');
+  rad.addColorStop(1, '#E8A598');
+  ctx.fillStyle = rad;
+  ctx.fillRect(0, 0, 128, 128);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  return texture;
+}
+
 

@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-import { createGoldFiligreeTexture, createPlacardTexture } from '../../utils/textureGenerators';
+import { createGoldFiligreeTexture, createPlacardTexture, createPearlTexture, createRococoFrameTexture } from '../../utils/textureGenerators';
 
 export default function OrnateFrame3D({
   frameData,
@@ -29,6 +29,8 @@ export default function OrnateFrame3D({
   const height = aspectRatio === 'landscape' ? 0.85 : (aspectRatio === 'square' ? 0.95 : 1.15);
 
   const goldFiligree = useMemo(() => createGoldFiligreeTexture(), []);
+  const rococoTex = useMemo(() => createRococoFrameTexture('#FFD6DF', '#E8A598'), []);
+  const pearlTex = useMemo(() => createPearlTexture(), []);
   const placardTex = useMemo(() => createPlacardTexture(title, date), [title, date]);
 
   // Image texture loader with safe fallback
@@ -55,6 +57,26 @@ export default function OrnateFrame3D({
     metalness: 0.82,
     roughness: 0.22,
   }), [goldFiligree]);
+
+  const frameLacquerMat = useMemo(() => new THREE.MeshStandardMaterial({
+    map: rococoTex,
+    color: '#FFF0F3',
+    roughness: 0.32,
+    metalness: 0.2,
+  }), [rococoTex]);
+
+  const pearlMaterial = useMemo(() => new THREE.MeshStandardMaterial({
+    map: pearlTex,
+    color: '#FFFDFE',
+    roughness: 0.1,
+    metalness: 0.2,
+  }), [pearlTex]);
+
+  const roseMat = useMemo(() => new THREE.MeshStandardMaterial({
+    color: '#FFB6C1',
+    roughness: 0.45,
+    metalness: 0.1,
+  }), []);
 
   const pictureMaterial = useMemo(() => new THREE.MeshStandardMaterial({
     map: texture,
@@ -99,6 +121,9 @@ export default function OrnateFrame3D({
           <mesh position={[0, rY + 0.08, 0.015]} material={goldMaterial}>
             <coneGeometry args={[0.14, 0.18, 5]} rotation={[0, 0, Math.PI]} />
           </mesh>
+          <mesh position={[0, rY + 0.06, 0.03]} material={pearlMaterial}>
+            <sphereGeometry args={[0.025, 10, 10]} />
+          </mesh>
         </group>
       );
     }
@@ -120,6 +145,10 @@ export default function OrnateFrame3D({
           <mesh material={pictureMaterial} position={[0, 0.08, 0.035]}>
             <shapeGeometry args={[heartShape]} />
           </mesh>
+          {/* Pearl accents at heart crown */}
+          <mesh position={[0, 0.44, 0.06]} material={pearlMaterial}>
+            <sphereGeometry args={[0.028, 10, 10]} />
+          </mesh>
         </group>
       );
     }
@@ -130,23 +159,31 @@ export default function OrnateFrame3D({
     return (
       <group>
         {/* Top bar */}
-        <mesh position={[0, halfH, 0]} material={goldMaterial} castShadow>
+        <mesh position={[0, halfH, 0]} material={frameLacquerMat} castShadow>
           <boxGeometry args={[width + frameThickness * 2, frameThickness, borderDepth]} />
         </mesh>
         {/* Bottom bar */}
-        <mesh position={[0, -halfH, 0]} material={goldMaterial} castShadow>
+        <mesh position={[0, -halfH, 0]} material={frameLacquerMat} castShadow>
           <boxGeometry args={[width + frameThickness * 2, frameThickness, borderDepth]} />
         </mesh>
         {/* Left bar */}
-        <mesh position={[-halfW, 0, 0]} material={goldMaterial} castShadow>
+        <mesh position={[-halfW, 0, 0]} material={frameLacquerMat} castShadow>
           <boxGeometry args={[frameThickness, height, borderDepth]} />
         </mesh>
         {/* Right bar */}
-        <mesh position={[halfW, 0, 0]} material={goldMaterial} castShadow>
+        <mesh position={[halfW, 0, 0]} material={frameLacquerMat} castShadow>
           <boxGeometry args={[frameThickness, height, borderDepth]} />
         </mesh>
 
-        {/* 4 Corner Rosettes */}
+        {/* Rose Gold Inner Beading */}
+        <mesh position={[0, halfH - 0.03, 0.02]} material={goldMaterial}>
+          <boxGeometry args={[width, 0.02, 0.02]} />
+        </mesh>
+        <mesh position={[0, -halfH + 0.03, 0.02]} material={goldMaterial}>
+          <boxGeometry args={[width, 0.02, 0.02]} />
+        </mesh>
+
+        {/* 4 Corner Rosettes with Pearls and Pink Petals */}
         {[
           [-halfW, halfH],
           [halfW, halfH],
@@ -155,7 +192,13 @@ export default function OrnateFrame3D({
         ].map(([cx, cy], idx) => (
           <group key={idx} position={[cx, cy, 0.02]}>
             <mesh material={goldMaterial}>
-              <sphereGeometry args={[0.055, 10, 10]} />
+              <sphereGeometry args={[0.05, 10, 10]} scale={[1, 1, 0.4]} />
+            </mesh>
+            <mesh position={[0, 0, 0.015]} material={roseMat}>
+              <sphereGeometry args={[0.025, 8, 8]} />
+            </mesh>
+            <mesh position={[0, 0, 0.025]} material={pearlMaterial}>
+              <sphereGeometry args={[0.015, 8, 8]} />
             </mesh>
           </group>
         ))}

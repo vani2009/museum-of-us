@@ -10,6 +10,7 @@ import MiniBarbieAvatars from './MiniBarbieAvatars';
 import MuseumDecor from './MuseumDecor';
 import MuseumLighting from './MuseumLighting';
 import FloatingMotes from './FloatingMotes';
+import WhimsicalArtFrames from './WhimsicalArtFrames';
 
 // Silky Smooth Spacious Camera Rig Controller
 function CameraRig({
@@ -197,6 +198,9 @@ export default function MuseumScene({
             onSelectFrame={onSelectFrame}
             focusedFrameId={focusedFrame?.id}
           />
+
+          {/* Whimsical Static Art Frames (Girlhood Files, Museum of Everything, Fairy Tale Castle, Melody Gramophone) */}
+          <WhimsicalArtFrames onSelectFrame={onSelectFrame} />
 
           {/* Gauri & Vani Mini Barbie Doll Avatars */}
           <MiniBarbieAvatars
