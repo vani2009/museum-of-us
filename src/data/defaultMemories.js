@@ -1,17 +1,17 @@
 // Default memory items categorized across 4 walls (strictly max 4 small dainty frames per wall)
 
 export const DEFAULT_AVATARS = {
-  museumTitle: "The Grand Museum of Us",
-  subtitle: "A Retrospective of Gauri & Vani: Everlasting Friendship & Shared Adventures",
+  museumTitle: "The Grand Birthday Museum of Us",
+  subtitle: "A Birthday Retrospective of Gauri & Vani: Everlasting Friendship & Sweet Memories 🎂✨",
   gauri: {
     id: "gauri",
     name: "Gauri",
-    role: "The one in white",
+    role: "Birthday Queen • The one in white",
     topStyle: "longsleeve-crop",
-    topColor: "#fbf7e8",
+    topColor: "#FFFDFE",
     bottomStyle: "denim-shorts",
     bottomColor: "#6b8fae",
-    shoesColor: "#fbf5e6",
+    shoesColor: "#FFFDFE",
     shoesType: "crocs",
     hairStyle: "long-straight",
     hairColor: "#1a1514",
@@ -20,18 +20,18 @@ export const DEFAULT_AVATARS = {
     hasBag: true,
     bagColor: "#111111",
     earrings: "silver-hoops",
-    quote: "Kind • Overthinks • Loves sunsets • Chai girl • Big dreams 🌅☕",
-    bio: "The sunset lover who overthinks every detail but always brings the best warmth and laughter."
+    quote: "Birthday Queen 👑 • Kind • Overthinks • Loves sunsets • Chai girl • Big dreams 🌅🍰",
+    bio: "The birthday girl and sunset lover who brings endless warmth, radiant smiles, and sweetest laughter."
   },
   vani: {
     id: "vani",
     name: "Vani",
-    role: "The one in black",
+    role: "Soul Sister • The one in black",
     topStyle: "tank-crop",
-    topColor: "#181818",
+    topColor: "#2A2426",
     bottomStyle: "baggy-jeans",
     bottomColor: "#567b9d",
-    shoesColor: "#c8b6e2",
+    shoesColor: "#E2D4F0",
     shoesType: "crocs",
     hairStyle: "layered-wavy",
     hairColor: "#1f1815",
@@ -41,8 +41,8 @@ export const DEFAULT_AVATARS = {
     hasBag: true,
     bagColor: "#111111",
     earrings: "silver-hoops",
-    quote: "Glasses • Pastel purple crocs • Bluer jeans • Snatched waist • Forever soul sister 💜✨",
-    bio: "The effortlessly stylish one with the iconic clear glasses, lavender crocs, and infectious laughter."
+    quote: "Chic glasses 👓 • Pastel purple crocs • Snatched waist • Forever soul sister 💜✨🎉",
+    bio: "The effortlessly stylish one with the iconic clear glasses, lavender crocs, and party confetti ready!"
   },
   friend1: null,
   friend2: null,

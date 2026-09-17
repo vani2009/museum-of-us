@@ -1,76 +1,96 @@
-// Color palette and theme tokens based on user reference:
-// Warm White (#fbf7e8), Pink Panther (#f5d0c6), Dusty Merlot (#62202f), and Gilded Gold (#d4af37)
+// Celebratory Birthday Color Palette & Festive Theme Tokens:
+// Pastel Pink (#FFB6C1 / #FFD1DC), Strawberry Cream (#FFF0F3), Marshmallow White (#FFFDFE),
+// Rose Gold (#E8A598 / #F4C2C2), Champagne Sparkle (#FAD02C), Pastel Lavender (#E8D5EA), and Berry Rose (#5A2A38)
 
 export const PALETTE = {
-  warmWhite: '#fbf7e8',
-  warmWhiteDark: '#ede5d3',
-  vintageCream: '#E6D8C1',
-  warmAmber: '#D9B382',
-  warmAmberDark: '#b88f58',
-  pinkPanther: '#f5d0c6',
-  pinkPantherDark: '#e5b6aa',
-  pinkPantherLight: '#faebe8',
-  dustyMauve: '#A37C76',
-  dustyMauveDark: '#85615c',
-  dustyMauveDeep: '#422f2d',
-  dustyMerlot: '#62202f',
-  dustyMerlotDark: '#44141f',
-  dustyMerlotDeep: '#280b12',
-  goldAntique: '#d4af37',
-  goldLight: '#f5de88',
-  goldRich: '#b88909',
-  stoneFacade: '#eee5d4',
-  stoneShadow: '#c8bc9f',
-  woodCarved: '#4a2f1b',
-  darkOak: '#3D2B1F',
-  woodFloor: '#fdf5f4',
-  woodFloorLight: '#faebe8',
+  // Whites & Creams
+  marshmallowWhite: '#FFFDFE',
+  strawberryCream: '#FFF0F3',
+  vanillaCream: '#FFF9F2',
+  warmWhite: '#FDF8F5',
+
+  // Pinks & Pastels
+  pastelPink: '#FFB6C1',
+  softBlush: '#FFC0CB',
+  babyPink: '#FFD1DC',
+  frostedRose: '#F8A5C2',
+  pastelLavender: '#E8D5EA',
+  pastelMint: '#D8F3DC',
+  pastelPeach: '#FFE5D9',
+
+  // Metals & Accents
+  roseGold: '#E8A598',
+  roseGoldLight: '#F4C2C2',
+  roseGoldRich: '#D47A6A',
+  champagneGold: '#F3D299',
+  champagneSparkle: '#FEE440',
+
+  // Stone & Facade
+  pearlFacade: '#FFF8F6',
+  pearlShadow: '#EBDCD8',
+
+  // Typography & Placards
+  berryRoseText: '#5A2A38',
+  softBurgundy: '#6B3343',
+  deepRose: '#4A1E2B',
+
+  // Floor
+  floorPastelPink: '#FFF5F7',
+  floorBlushLight: '#FDECEF',
 };
 
 export const THEMES = {
-  merlotLuxe: {
-    id: 'merlotLuxe',
-    name: 'Dusty Mauve & Warm Amber',
-    wallColor: '#A37C76',
-    wallTrim: '#fbf7e8',
-    carpetColor: '#D9B382',
-    floorColor: '#fdf5f4',
-    accentColor: '#D9B382',
-    frameColor: '#d4af37',
-    ambientLight: '#fff5f2',
-    description: 'Romantic vintage dusty mauve walls with cream polka dots and warm amber velvet carpets.',
+  birthdayCelebration: {
+    id: 'birthdayCelebration',
+    name: '🎉 Birthday Pastel & Rose Gold',
+    wallColor: '#FFD1DC',
+    wallStripe: '#FFFDFE',
+    wallTrim: '#FFF8F6',
+    carpetColor: '#F8A5C2',
+    floorColor: '#FFF5F7',
+    accentColor: '#E8A598',
+    frameColor: '#E8A598',
+    ambientLight: '#FFF5F7',
+    description: 'Festive pastel pink candy-striped walls, floating balloons, paper star garlands, and rose gold accents.',
   },
-  parisianBeige: {
-    id: 'parisianBeige',
-    name: 'Warm White & Blush Rose',
-    wallColor: '#fbf7e8',
-    wallTrim: '#A37C76',
-    carpetColor: '#D9B382',
-    floorColor: '#fdf5f4',
-    frameColor: '#d4af37',
-    ambientLight: '#fffaf0',
-    description: 'Classic Parisian salon aesthetic with airy limestone walls and dusty mauve accents.',
+  cottonCandyDream: {
+    id: 'cottonCandyDream',
+    name: '🍭 Cotton Candy & Marshmallow',
+    wallColor: '#FFE5EC',
+    wallStripe: '#FFFDFE',
+    wallTrim: '#FFF0F5',
+    carpetColor: '#FFB3C6',
+    floorColor: '#FFF5F8',
+    accentColor: '#F4C2C2',
+    frameColor: '#F4C2C2',
+    ambientLight: '#FFF0F5',
+    description: 'Ultra-sweet cotton candy pink & vanilla white with shimmering party confetti.',
   },
-  royalNavy: {
-    id: 'royalNavy',
-    name: 'Midnight Navy & Rose Gold',
-    wallColor: '#1b2a47',
-    wallTrim: '#fbf7e8',
-    carpetColor: '#D9B382',
-    floorColor: '#fdf5f4',
-    frameColor: '#e0a96d',
-    ambientLight: '#d9e5ff',
-    description: 'Deep nocturnal gallery with starry ambient reflections.',
+  lavenderFairy: {
+    id: 'lavenderFairy',
+    name: '✨ Lavender & Rosy Sparkle',
+    wallColor: '#E8D5EA',
+    wallStripe: '#FFFDFE',
+    wallTrim: '#FAF5FC',
+    carpetColor: '#D8B4E2',
+    floorColor: '#FAF5FC',
+    accentColor: '#E8A598',
+    frameColor: '#E8A598',
+    ambientLight: '#FBF5FD',
+    description: 'Enchanted pastel lavender with fairy tale stars and rose gold ribbons.',
   },
-  emeraldShadowbox: {
-    id: 'emeraldShadowbox',
-    name: 'Emerald Shadowbox & Gold',
-    wallColor: '#1e382b',
-    wallTrim: '#fbf7e8',
-    carpetColor: '#faebe8',
-    floorColor: '#fdf5f4',
-    frameColor: '#d4af37',
-    ambientLight: '#fffae8',
-    description: 'Deep forest green velvet inspired by the original miniature shadow box diorama.',
+  peachChampagne: {
+    id: 'peachChampagne',
+    name: '🥂 Peach & Champagne Fizz',
+    wallColor: '#FFE5D9',
+    wallStripe: '#FFFDFE',
+    wallTrim: '#FFF8F5',
+    carpetColor: '#F8C291',
+    floorColor: '#FFF8F5',
+    accentColor: '#F3D299',
+    frameColor: '#F3D299',
+    ambientLight: '#FFF9F5',
+    description: 'Warm peach blush and sparkling champagne celebration.',
   }
 };
+

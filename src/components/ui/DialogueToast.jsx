@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Heart, Sparkles } from 'lucide-react';
+import { X, Heart, Sparkles, Cake, PartyPopper } from 'lucide-react';
 
 export default function DialogueToast({ dialogue, onClose }) {
   if (!dialogue) return null;
@@ -8,25 +8,25 @@ export default function DialogueToast({ dialogue, onClose }) {
 
   return (
     <div className="fixed top-6 inset-x-0 mx-auto max-w-lg w-[92%] z-50 animate-fadeIn pointer-events-auto">
-      <div className="bg-black/40 backdrop-blur-xl border border-white/25 p-4 sm:p-5 rounded-2xl shadow-2xl flex items-start justify-between gap-3 text-warm-white">
+      <div className="bg-white/85 backdrop-blur-2xl border-2 border-rose-gold/60 p-4 sm:p-5 rounded-3xl shadow-pink-glow flex items-start justify-between gap-3 text-berry-rose">
         <div className="flex items-start gap-3.5 flex-1">
           {/* Avatar Icon Badge */}
-          <div className="w-10 h-10 rounded-full border border-white/30 bg-black/30 flex items-center justify-center text-lg flex-shrink-0">
-            {isGauri ? '🤍' : '🖤'}
+          <div className="w-11 h-11 rounded-2xl border border-rose-gold/50 bg-strawberry-cream/90 flex items-center justify-center text-xl flex-shrink-0 shadow-sm">
+            {isGauri ? '🎂' : '🥳'}
           </div>
 
           {/* Dialogue Text */}
           <div className="space-y-1 flex-1">
             <div className="flex items-center gap-2">
-              <h4 className="text-sm font-cinzel font-bold text-warm-white flex items-center gap-1.5">
+              <h4 className="text-sm font-cinzel font-bold text-berry-rose flex items-center gap-1.5">
                 {dialogue.name}
-                <span className="text-[11px] font-sans font-normal text-pink-panther/90">
-                  ({dialogue.role || (isGauri ? 'The one in white' : 'The one in black')})
+                <span className="text-[11px] font-sans font-medium text-rose-gold-rich">
+                  ({dialogue.role || (isGauri ? 'Birthday Girl' : 'Soul Sister')})
                 </span>
               </h4>
             </div>
 
-            <p className="text-sm font-serif italic text-warm-white/95 leading-relaxed">
+            <p className="text-sm font-serif italic text-berry-rose/95 leading-relaxed">
               "{dialogue.quote}"
             </p>
           </div>
@@ -35,7 +35,7 @@ export default function DialogueToast({ dialogue, onClose }) {
         {/* Dismiss Button */}
         <button
           onClick={onClose}
-          className="p-1.5 text-warm-white/60 hover:text-warm-white rounded-lg hover:bg-white/10 transition-colors"
+          className="p-1.5 text-berry-rose/60 hover:text-berry-rose rounded-xl hover:bg-rose-50 transition-colors"
           title="Close dialogue"
         >
           <X className="w-4 h-4" />
@@ -44,3 +44,4 @@ export default function DialogueToast({ dialogue, onClose }) {
     </div>
   );
 }
+

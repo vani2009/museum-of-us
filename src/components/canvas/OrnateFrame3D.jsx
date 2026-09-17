@@ -48,17 +48,17 @@ export default function OrnateFrame3D({
     );
   }, [image]);
 
-  // Stable PBR Gold & Image Materials
+  // Shimmering Rose Gold & Image Materials
   const goldMaterial = useMemo(() => new THREE.MeshStandardMaterial({
     map: goldFiligree,
-    color: '#d4af37',
-    metalness: 0.88,
-    roughness: 0.25,
+    color: '#E8A598',
+    metalness: 0.82,
+    roughness: 0.22,
   }), [goldFiligree]);
 
   const pictureMaterial = useMemo(() => new THREE.MeshStandardMaterial({
     map: texture,
-    color: texture ? '#ffffff' : '#f5d0c6',
+    color: texture ? '#FFFFFF' : '#FFD1DC',
     roughness: 0.2,
     metalness: 0.05,
   }), [texture]);

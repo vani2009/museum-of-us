@@ -227,11 +227,34 @@ function MiniBarbieFigure({
             <mesh position={[0.095, -0.18, 0.03]} rotation={[0, 0, -0.1]} material={hairMat} castShadow>
               <capsuleGeometry args={[0.048, 0.32, 8, 12]} />
             </mesh>
-            <mesh position={[0, -0.22, -0.07]} material={hairMat} castShadow>
-              <capsuleGeometry args={[0.085, 0.42, 8, 12]} />
+            <mesh position={[0, -0.22, -0.06]} material={hairMat} castShadow>
+              <capsuleGeometry args={[0.095, 0.46, 8, 12]} />
             </mesh>
           </group>
         )}
+
+        {/* 3D Birthday Party Hat */}
+        <group position={[0, 0.19, 0]} rotation={[0.08, 0, id === 'gauri' ? 0.14 : -0.14]}>
+          {/* Hat Cone */}
+          <mesh castShadow>
+            <coneGeometry args={[0.07, 0.2, 16]} />
+            <meshStandardMaterial
+              color={id === 'gauri' ? '#FFB6C1' : '#E8D5EA'}
+              roughness={0.3}
+              metalness={0.15}
+            />
+          </mesh>
+          {/* Hat Base Tinsel Fringe */}
+          <mesh position={[0, -0.09, 0]}>
+            <torusGeometry args={[0.068, 0.014, 8, 16]} rotation={[Math.PI / 2, 0, 0]} />
+            <meshStandardMaterial color="#E8A598" metalness={0.8} roughness={0.25} />
+          </mesh>
+          {/* Fluffy Top Pom-Pom */}
+          <mesh position={[0, 0.11, 0]}>
+            <sphereGeometry args={[0.024, 12, 12]} />
+            <meshStandardMaterial color="#FFFDFE" roughness={0.5} />
+          </mesh>
+        </group>
       </group>
 
       {/* Torso & Top */}

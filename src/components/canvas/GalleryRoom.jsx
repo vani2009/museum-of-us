@@ -1,52 +1,54 @@
 import React, { useMemo } from 'react';
 import * as THREE from 'three';
-import { createVelvetWallTexture, createHerringboneFloorTexture, createStoneArchTexture } from '../../utils/textureGenerators';
+import { createStripedWallTexture, createHerringboneFloorTexture, createStoneArchTexture } from '../../utils/textureGenerators';
+import BirthdayGarlands from './BirthdayGarlands';
+import BirthdayBalloons from './BirthdayBalloons';
 
 export default function GalleryRoom({
-  wallColor = '#A37C76',
-  trimColor = '#fbf7e8',
-  carpetColor = '#D9B382',
+  wallColor = '#FFD1DC',
+  trimColor = '#FFF8F6',
+  carpetColor = '#F8A5C2',
   children
 }) {
-  const wallTexture = useMemo(() => createVelvetWallTexture(wallColor), [wallColor]);
+  const wallTexture = useMemo(() => createStripedWallTexture(wallColor, '#FFFDFE'), [wallColor]);
   const floorTexture = useMemo(() => createHerringboneFloorTexture(), []);
   const trimTexture = useMemo(() => createStoneArchTexture(), []);
 
   const wallMat = useMemo(() => new THREE.MeshStandardMaterial({
     map: wallTexture,
-    color: wallColor,
-    roughness: 0.85,
+    color: '#FFFFFF',
+    roughness: 0.8,
     metalness: 0.05,
-  }), [wallTexture, wallColor]);
+  }), [wallTexture]);
 
   const trimMat = useMemo(() => new THREE.MeshStandardMaterial({
     map: trimTexture,
     color: trimColor,
-    roughness: 0.5,
-    metalness: 0.1,
+    roughness: 0.45,
+    metalness: 0.08,
   }), [trimTexture, trimColor]);
 
   const floorMat = useMemo(() => new THREE.MeshStandardMaterial({
     map: floorTexture,
-    color: '#ffffff',
+    color: '#FFFFFF',
     roughness: 0.28,
     metalness: 0.05,
   }), [floorTexture]);
 
   const carpetMat = useMemo(() => new THREE.MeshStandardMaterial({
     color: carpetColor,
-    roughness: 0.8,
+    roughness: 0.75,
     metalness: 0.02,
   }), [carpetColor]);
 
-  const goldTrimMat = useMemo(() => new THREE.MeshStandardMaterial({
-    color: '#d4af37',
+  const roseGoldTrimMat = useMemo(() => new THREE.MeshStandardMaterial({
+    color: '#E8A598',
     roughness: 0.25,
     metalness: 0.85,
   }), []);
 
   const ceilingMat = useMemo(() => new THREE.MeshStandardMaterial({
-    color: '#fbf7e8',
+    color: '#FFF8FA',
     roughness: 0.8,
     metalness: 0.05,
   }), []);
@@ -65,7 +67,7 @@ export default function GalleryRoom({
       {/* Velvet Runner Rug / Carpet in Center */}
       <group position={[0, 0.005, 0]}>
         {/* Carpet Border */}
-        <mesh rotation={[-Math.PI / 2, 0, 0]} material={goldTrimMat}>
+        <mesh rotation={[-Math.PI / 2, 0, 0]} material={roseGoldTrimMat}>
           <planeGeometry args={[4.4, 7.4]} />
         </mesh>
         {/* Carpet Body */}
@@ -78,6 +80,12 @@ export default function GalleryRoom({
       <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, roomH, 0]} material={ceilingMat}>
         <planeGeometry args={[roomW, roomD]} />
       </mesh>
+
+      {/* Birthday Garlands (Paper Bunting & Shimmering 3D Stars) */}
+      <BirthdayGarlands />
+
+      {/* Birthday Balloons (Striped & Polka-Dot Bouquets) */}
+      <BirthdayBalloons />
 
       {/* ================= BACK WALL (z = -5) ================= */}
       <group position={[0, 0, -roomD / 2]}>

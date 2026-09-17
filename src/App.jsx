@@ -52,9 +52,9 @@ export default function App() {
   const [currentTheme, setCurrentTheme] = useState(() => {
     try {
       const saved = localStorage.getItem('3d_museum_theme');
-      return saved ? JSON.parse(saved) : THEMES.merlotLuxe;
+      return saved ? JSON.parse(saved) : THEMES.birthdayCelebration;
     } catch {
-      return THEMES.merlotLuxe;
+      return THEMES.birthdayCelebration;
     }
   });
 
@@ -171,7 +171,7 @@ export default function App() {
   const handleResetDefaults = () => {
     setWallMemories(DEFAULT_WALL_MEMORIES);
     setAvatarData(DEFAULT_AVATARS);
-    setCurrentTheme(THEMES.merlotLuxe);
+    setCurrentTheme(THEMES.birthdayCelebration);
     setMuseumMeta({
       title: DEFAULT_AVATARS.museumTitle,
       subtitle: DEFAULT_AVATARS.subtitle,
@@ -183,7 +183,7 @@ export default function App() {
   };
 
   return (
-    <main className="relative w-screen h-screen overflow-hidden bg-dusty-mauve-deep select-none">
+    <main className="relative w-screen h-screen overflow-hidden bg-[#FFF0F3] select-none">
       {/* 3D WebGL Canvas Scene */}
       <MuseumScene
         viewMode={viewMode}

@@ -1,18 +1,19 @@
 import React, { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-import { createCarvedDoorTexture, createStoneArchTexture, createFanlightTexture, createPlaqueTexture } from '../../utils/textureGenerators';
+import { createPastelDoorTexture, createStoneArchTexture, createFanlightTexture, createPlaqueTexture } from '../../utils/textureGenerators';
+import { BalloonBouquet } from './BirthdayBalloons';
 
 export default function GrandArchedEntrance({ isOpen = false, onDoorClick }) {
   const leftDoorRef = useRef();
   const rightDoorRef = useRef();
 
   // Procedural textures
-  const doorTexture = useMemo(() => createCarvedDoorTexture(), []);
+  const doorTexture = useMemo(() => createPastelDoorTexture(), []);
   const stoneTexture = useMemo(() => createStoneArchTexture(), []);
   const fanlightTexture = useMemo(() => createFanlightTexture(), []);
-  const outdoorPlaqueTex = useMemo(() => createPlaqueTexture("THE GRAND MUSEUM"), []);
-  const indoorPlaqueTex = useMemo(() => createPlaqueTexture("✦ GRAND ENTRANCE & EXIT ✦"), []);
+  const outdoorPlaqueTex = useMemo(() => createPlaqueTexture("✦ HAPPY BIRTHDAY GAURI! ✦"), []);
+  const indoorPlaqueTex = useMemo(() => createPlaqueTexture("✦ THE CELEBRATION GALLERY ✦"), []);
 
   // Smooth door opening animation
   useFrame((state, delta) => {
@@ -38,34 +39,34 @@ export default function GrandArchedEntrance({ isOpen = false, onDoorClick }) {
   // Materials
   const stoneMaterial = useMemo(() => new THREE.MeshStandardMaterial({
     map: stoneTexture,
-    color: '#fbf7e8',
+    color: '#FFF8F6',
     roughness: 0.85,
     metalness: 0.05,
   }), [stoneTexture]);
 
   const doorMaterial = useMemo(() => new THREE.MeshStandardMaterial({
     map: doorTexture,
-    color: '#ffffff',
-    roughness: 0.45,
-    metalness: 0.15,
+    color: '#FFFFFF',
+    roughness: 0.35,
+    metalness: 0.1,
   }), [doorTexture]);
 
-  const goldBrassMaterial = useMemo(() => new THREE.MeshStandardMaterial({
-    color: '#d4af37',
-    roughness: 0.3,
+  const roseGoldMaterial = useMemo(() => new THREE.MeshStandardMaterial({
+    color: '#E8A598',
+    roughness: 0.25,
     metalness: 0.85,
   }), []);
 
   const outdoorPlaqueMat = useMemo(() => new THREE.MeshStandardMaterial({
     map: outdoorPlaqueTex,
-    roughness: 0.3,
-    metalness: 0.6,
+    roughness: 0.25,
+    metalness: 0.5,
   }), [outdoorPlaqueTex]);
 
   const indoorPlaqueMat = useMemo(() => new THREE.MeshStandardMaterial({
     map: indoorPlaqueTex,
-    roughness: 0.3,
-    metalness: 0.6,
+    roughness: 0.25,
+    metalness: 0.5,
   }), [indoorPlaqueTex]);
 
   const fanlightMaterial = useMemo(() => new THREE.MeshStandardMaterial({
@@ -78,8 +79,8 @@ export default function GrandArchedEntrance({ isOpen = false, onDoorClick }) {
   }), [fanlightTexture]);
 
   const warmInteriorTrimMat = useMemo(() => new THREE.MeshStandardMaterial({
-    color: '#fbf7e8',
-    roughness: 0.5,
+    color: '#FFF8F6',
+    roughness: 0.45,
     metalness: 0.1,
   }), []);
 
@@ -148,7 +149,7 @@ export default function GrandArchedEntrance({ isOpen = false, onDoorClick }) {
           <torusGeometry args={[1.4, 0.18, 16, 32, Math.PI]} />
         </mesh>
         {/* Ornate Keystone at Apex */}
-        <mesh position={[0, 1.4, 0.08]} material={goldBrassMaterial} castShadow>
+        <mesh position={[0, 1.4, 0.08]} material={roseGoldMaterial} castShadow>
           <boxGeometry args={[0.42, 0.46, 0.25]} />
         </mesh>
         {/* Arch Spandrel Cornice */}
@@ -157,34 +158,38 @@ export default function GrandArchedEntrance({ isOpen = false, onDoorClick }) {
         </mesh>
       </group>
 
-      {/* Golden Engraved Entrance Plaque (Outdoor) */}
+      {/* Birthday Celebration Entrance Plaque (Outdoor) */}
       <group position={[0, 4.85, 0.26]}>
         <mesh material={outdoorPlaqueMat} castShadow>
-          <boxGeometry args={[3.2, 0.55, 0.06]} />
+          <boxGeometry args={[3.4, 0.58, 0.06]} />
         </mesh>
       </group>
+
+      {/* Outdoor Flanking Balloon Bouquets */}
+      <BalloonBouquet position={[-2.8, 0, 0.5]} scale={0.9} />
+      <BalloonBouquet position={[2.8, 0, 0.5]} scale={0.9} />
 
       {/* Outdoor Lantern Sconces */}
       <group position={[-2.4, 2.8, 0.38]}>
-        <mesh material={goldBrassMaterial}>
+        <mesh material={roseGoldMaterial}>
           <cylinderGeometry args={[0.04, 0.04, 0.4, 12]} />
         </mesh>
         <mesh position={[0, 0.25, 0]}>
           <octahedronGeometry args={[0.16]} />
-          <meshStandardMaterial color="#fff4d0" emissive="#f5d0c6" emissiveIntensity={1.5} />
+          <meshStandardMaterial color="#FFF8E7" emissive="#FFD1DC" emissiveIntensity={1.5} />
         </mesh>
-        <pointLight color="#ffe8d6" intensity={15} distance={4} />
+        <pointLight color="#FFE5EC" intensity={15} distance={4} />
       </group>
 
       <group position={[2.4, 2.8, 0.38]}>
-        <mesh material={goldBrassMaterial}>
+        <mesh material={roseGoldMaterial}>
           <cylinderGeometry args={[0.04, 0.04, 0.4, 12]} />
         </mesh>
         <mesh position={[0, 0.25, 0]}>
           <octahedronGeometry args={[0.16]} />
-          <meshStandardMaterial color="#fff4d0" emissive="#f5d0c6" emissiveIntensity={1.5} />
+          <meshStandardMaterial color="#FFF8E7" emissive="#FFD1DC" emissiveIntensity={1.5} />
         </mesh>
-        <pointLight color="#ffe8d6" intensity={15} distance={4} />
+        <pointLight color="#FFE5EC" intensity={15} distance={4} />
       </group>
 
       {/* ================= INDOOR ARCHWAY & MOLDINGS (Facing -Z into Gallery) ================= */}
@@ -196,7 +201,7 @@ export default function GrandArchedEntrance({ isOpen = false, onDoorClick }) {
         <mesh position={[0, 0, 0]} material={warmInteriorTrimMat}>
           <boxGeometry args={[0.34, 2.6, 0.1]} />
         </mesh>
-        <mesh position={[0, 1.45, 0]} material={goldBrassMaterial}>
+        <mesh position={[0, 1.45, 0]} material={roseGoldMaterial}>
           <boxGeometry args={[0.44, 0.25, 0.14]} />
         </mesh>
       </group>
@@ -208,7 +213,7 @@ export default function GrandArchedEntrance({ isOpen = false, onDoorClick }) {
         <mesh position={[0, 0, 0]} material={warmInteriorTrimMat}>
           <boxGeometry args={[0.34, 2.6, 0.1]} />
         </mesh>
-        <mesh position={[0, 1.45, 0]} material={goldBrassMaterial}>
+        <mesh position={[0, 1.45, 0]} material={roseGoldMaterial}>
           <boxGeometry args={[0.44, 0.25, 0.14]} />
         </mesh>
       </group>
@@ -218,8 +223,8 @@ export default function GrandArchedEntrance({ isOpen = false, onDoorClick }) {
         <mesh material={warmInteriorTrimMat}>
           <torusGeometry args={[1.4, 0.15, 16, 32, Math.PI]} />
         </mesh>
-        {/* Interior Gold Keystone */}
-        <mesh position={[0, 1.4, 0.04]} material={goldBrassMaterial}>
+        {/* Interior Rose Gold Keystone */}
+        <mesh position={[0, 1.4, 0.04]} material={roseGoldMaterial}>
           <boxGeometry args={[0.38, 0.4, 0.16]} />
         </mesh>
         {/* Interior Crown Entablature */}
@@ -231,31 +236,31 @@ export default function GrandArchedEntrance({ isOpen = false, onDoorClick }) {
       {/* Interior Golden Plaque Above Doorway */}
       <group position={[0, 4.75, -0.22]} rotation={[0, Math.PI, 0]}>
         <mesh material={indoorPlaqueMat}>
-          <boxGeometry args={[2.8, 0.48, 0.04]} />
+          <boxGeometry args={[3.0, 0.5, 0.04]} />
         </mesh>
       </group>
 
-      {/* Interior Brass Wall Sconces Flanking Doorway */}
+      {/* Interior Sconces Flanking Doorway */}
       <group position={[-2.4, 2.8, -0.22]}>
-        <mesh material={goldBrassMaterial}>
+        <mesh material={roseGoldMaterial}>
           <cylinderGeometry args={[0.03, 0.03, 0.3, 12]} />
         </mesh>
         <mesh position={[0, 0.2, 0]}>
           <sphereGeometry args={[0.12, 16, 16]} />
-          <meshStandardMaterial color="#fff4d0" emissive="#f5d0c6" emissiveIntensity={1.2} />
+          <meshStandardMaterial color="#FFF8E7" emissive="#FFD1DC" emissiveIntensity={1.2} />
         </mesh>
-        <pointLight color="#ffe8d6" intensity={12} distance={3.5} />
+        <pointLight color="#FFE5EC" intensity={12} distance={3.5} />
       </group>
 
       <group position={[2.4, 2.8, -0.22]}>
-        <mesh material={goldBrassMaterial}>
+        <mesh material={roseGoldMaterial}>
           <cylinderGeometry args={[0.03, 0.03, 0.3, 12]} />
         </mesh>
         <mesh position={[0, 0.2, 0]}>
           <sphereGeometry args={[0.12, 16, 16]} />
-          <meshStandardMaterial color="#fff4d0" emissive="#f5d0c6" emissiveIntensity={1.2} />
+          <meshStandardMaterial color="#FFF8E7" emissive="#FFD1DC" emissiveIntensity={1.2} />
         </mesh>
-        <pointLight color="#ffe8d6" intensity={12} distance={3.5} />
+        <pointLight color="#FFE5EC" intensity={12} distance={3.5} />
       </group>
 
       {/* ================= SEMICIRCULAR FANLIGHT / TRANSOM WINDOW ================= */}
@@ -279,19 +284,19 @@ export default function GrandArchedEntrance({ isOpen = false, onDoorClick }) {
             <boxGeometry args={[1.35, 2.8, 0.12]} />
           </mesh>
 
-          {/* Outdoor Brass Ring Knocker (Facing +Z) */}
-          <mesh position={[1.15, 0.1, 0.08]} material={goldBrassMaterial}>
+          {/* Outdoor Rose Gold Ring Knocker (Facing +Z) */}
+          <mesh position={[1.15, 0.1, 0.08]} material={roseGoldMaterial}>
             <torusGeometry args={[0.08, 0.02, 16, 24]} />
           </mesh>
-          <mesh position={[1.15, 0.1, 0.065]} material={goldBrassMaterial}>
+          <mesh position={[1.15, 0.1, 0.065]} material={roseGoldMaterial}>
             <sphereGeometry args={[0.04, 16, 16]} />
           </mesh>
 
-          {/* Indoor Brass Handle & Escutcheon (Facing -Z) */}
-          <mesh position={[1.15, 0.0, -0.075]} material={goldBrassMaterial}>
+          {/* Indoor Rose Gold Handle & Escutcheon (Facing -Z) */}
+          <mesh position={[1.15, 0.0, -0.075]} material={roseGoldMaterial}>
             <boxGeometry args={[0.06, 0.28, 0.02]} />
           </mesh>
-          <mesh position={[1.15, 0.06, -0.1]} material={goldBrassMaterial}>
+          <mesh position={[1.15, 0.06, -0.1]} material={roseGoldMaterial}>
             <boxGeometry args={[0.14, 0.03, 0.04]} />
           </mesh>
         </group>
@@ -310,19 +315,19 @@ export default function GrandArchedEntrance({ isOpen = false, onDoorClick }) {
             <boxGeometry args={[1.35, 2.8, 0.12]} />
           </mesh>
 
-          {/* Outdoor Brass Ring Knocker (Facing +Z) */}
-          <mesh position={[-1.15, 0.1, 0.08]} material={goldBrassMaterial}>
+          {/* Outdoor Rose Gold Ring Knocker (Facing +Z) */}
+          <mesh position={[-1.15, 0.1, 0.08]} material={roseGoldMaterial}>
             <torusGeometry args={[0.08, 0.02, 16, 24]} />
           </mesh>
-          <mesh position={[-1.15, 0.1, 0.065]} material={goldBrassMaterial}>
+          <mesh position={[-1.15, 0.1, 0.065]} material={roseGoldMaterial}>
             <sphereGeometry args={[0.04, 16, 16]} />
           </mesh>
 
-          {/* Indoor Brass Handle & Escutcheon (Facing -Z) */}
-          <mesh position={[-1.15, 0.0, -0.075]} material={goldBrassMaterial}>
+          {/* Indoor Rose Gold Handle & Escutcheon (Facing -Z) */}
+          <mesh position={[-1.15, 0.0, -0.075]} material={roseGoldMaterial}>
             <boxGeometry args={[0.06, 0.28, 0.02]} />
           </mesh>
-          <mesh position={[-1.15, 0.06, -0.1]} material={goldBrassMaterial}>
+          <mesh position={[-1.15, 0.06, -0.1]} material={roseGoldMaterial}>
             <boxGeometry args={[0.14, 0.03, 0.04]} />
           </mesh>
         </group>
@@ -330,4 +335,5 @@ export default function GrandArchedEntrance({ isOpen = false, onDoorClick }) {
     </group>
   );
 }
+
 
