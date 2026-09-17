@@ -68,23 +68,23 @@ export default function CuratorStudioModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-pink-900/30 backdrop-blur-md animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/20 backdrop-blur-sm animate-fadeIn">
       {/* Backdrop */}
       <div className="absolute inset-0" onClick={onClose} />
 
-      {/* Main Studio Modal - Frosted Glass */}
-      <div className="relative z-10 max-w-5xl w-full bg-white/90 backdrop-blur-2xl border-2 border-rose-gold/60 rounded-3xl overflow-hidden shadow-pink-glow flex flex-col max-h-[90vh]">
+      {/* Main Transparent Studio Modal */}
+      <div className="relative z-10 max-w-5xl w-full bg-white/35 backdrop-blur-2xl border border-white/60 rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="p-5 sm:p-6 border-b border-rose-gold/30 bg-strawberry-cream/70 flex items-center justify-between">
+        <div className="p-5 sm:p-6 border-b border-white/30 bg-white/20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-white/80 rounded-xl border border-rose-gold/50 text-rose-gold-rich shadow-sm">
+            <div className="p-2.5 bg-white/40 rounded-xl border border-white/50 text-rose-gold-dark shadow-sm">
               <Palette className="w-6 h-6" />
             </div>
             <div>
               <h2 className="text-xl sm:text-2xl font-cinzel font-bold text-berry-rose">
                 Curator Studio
               </h2>
-              <p className="text-xs text-rose-gold-rich font-serif">
+              <p className="text-xs text-berry-rose/75 font-serif">
                 Upload your photos, write memory stories, and choose your color palette
               </p>
             </div>
@@ -92,22 +92,22 @@ export default function CuratorStudioModal({
 
           <button
             onClick={onClose}
-            className="p-2 bg-white/80 hover:bg-white text-berry-rose rounded-full border border-rose-gold/40 transition-all hover:scale-110 shadow-sm"
+            className="p-2 bg-white/40 hover:bg-white/70 text-berry-rose rounded-full border border-white/50 transition-all hover:scale-110 shadow-md backdrop-blur-md"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Tab Navigation */}
-        <div className="px-6 pt-4 border-b border-rose-gold/20 flex gap-2 overflow-x-auto bg-strawberry-cream/40">
+        <div className="px-6 pt-4 border-b border-white/20 flex gap-2 overflow-x-auto bg-white/10">
           {walls.map((w) => (
             <button
               key={w.id}
               onClick={() => setActiveTab(w.id)}
-              className={`px-4 py-2.5 rounded-t-xl text-xs sm:text-sm font-cinzel font-medium transition-all whitespace-nowrap ${
+              className={`px-4 py-2.5 rounded-t-xl text-xs sm:text-sm font-cinzel font-medium transition-all whitespace-nowrap backdrop-blur-md ${
                 activeTab === w.id
-                  ? 'bg-white border-t-2 border-x-2 border-rose-gold text-berry-rose font-bold shadow-sm'
-                  : 'text-berry-rose/70 hover:text-berry-rose hover:bg-white/50'
+                  ? 'bg-white/50 border-t border-x border-white/60 text-berry-rose font-bold shadow-sm'
+                  : 'text-berry-rose/70 hover:text-berry-rose hover:bg-white/30'
               }`}
             >
               {w.label}
@@ -116,7 +116,7 @@ export default function CuratorStudioModal({
         </div>
 
         {/* Tab Content Area */}
-        <div className="p-6 overflow-y-auto flex-1 space-y-6">
+        <div className="p-6 overflow-y-auto flex-1 space-y-6 bg-white/10">
           {activeTab === 'theme' ? (
             /* Theme & Aesthetic Tab */
             <div className="space-y-6">
@@ -126,25 +126,25 @@ export default function CuratorStudioModal({
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                   <div>
-                    <label className="block text-xs font-cinzel text-berry-rose/80 mb-1.5 font-bold">
+                    <label className="block text-xs font-cinzel text-berry-rose mb-1.5 font-bold">
                       Exhibition Title
                     </label>
                     <input
                       type="text"
                       value={localMeta.title}
                       onChange={(e) => setLocalMeta({ ...localMeta, title: e.target.value })}
-                      className="w-full bg-white/80 border border-rose-gold/40 rounded-xl px-4 py-2.5 text-berry-rose focus:outline-none focus:border-rose-gold shadow-sm font-sans"
+                      className="w-full bg-white/40 border border-white/50 rounded-xl px-4 py-2.5 text-berry-rose placeholder-berry-rose/50 focus:outline-none focus:bg-white/60 focus:border-rose-gold shadow-sm font-sans"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-cinzel text-berry-rose/80 mb-1.5 font-bold">
+                    <label className="block text-xs font-cinzel text-berry-rose mb-1.5 font-bold">
                       Subtitle / Quote
                     </label>
                     <input
                       type="text"
                       value={localMeta.subtitle}
                       onChange={(e) => setLocalMeta({ ...localMeta, subtitle: e.target.value })}
-                      className="w-full bg-white/80 border border-rose-gold/40 rounded-xl px-4 py-2.5 text-berry-rose focus:outline-none focus:border-rose-gold shadow-sm font-sans"
+                      className="w-full bg-white/40 border border-white/50 rounded-xl px-4 py-2.5 text-berry-rose placeholder-berry-rose/50 focus:outline-none focus:bg-white/60 focus:border-rose-gold shadow-sm font-sans"
                     />
                   </div>
                 </div>
@@ -161,17 +161,17 @@ export default function CuratorStudioModal({
                       <div
                         key={themeOption.id}
                         onClick={() => onSelectTheme(themeOption)}
-                        className={`p-4 rounded-2xl border-2 transition-all cursor-pointer flex flex-col justify-between ${
+                        className={`p-4 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between backdrop-blur-md ${
                           isSelected
-                            ? 'border-rose-gold bg-strawberry-cream/90 shadow-rose-glow'
-                            : 'border-rose-gold/30 bg-white/60 hover:border-rose-gold/60'
+                            ? 'border-white bg-white/50 shadow-md'
+                            : 'border-white/30 bg-white/20 hover:bg-white/35 hover:border-white/50'
                         }`}
                       >
                         <div className="flex items-center justify-between mb-3">
                           <h4 className="font-cinzel font-bold text-berry-rose text-sm sm:text-base">
                             {themeOption.name}
                           </h4>
-                          {isSelected && <Check className="w-5 h-5 text-rose-gold-rich" />}
+                          {isSelected && <Check className="w-5 h-5 text-rose-gold-dark" />}
                         </div>
                         <p className="text-xs text-berry-rose/80 font-serif mb-4">
                           {themeOption.description}
@@ -179,22 +179,22 @@ export default function CuratorStudioModal({
                         {/* Swatches */}
                         <div className="flex items-center gap-2">
                           <div
-                            className="w-6 h-6 rounded-full border border-rose-gold/40 shadow-sm"
+                            className="w-6 h-6 rounded-full border border-white/60 shadow-sm"
                             style={{ backgroundColor: themeOption.wallColor }}
                             title="Wall Base"
                           />
                           <div
-                            className="w-6 h-6 rounded-full border border-rose-gold/40 shadow-sm"
+                            className="w-6 h-6 rounded-full border border-white/60 shadow-sm"
                             style={{ backgroundColor: themeOption.wallStripe || themeOption.wallTrim }}
                             title="Wall Stripes / Trim"
                           />
                           <div
-                            className="w-6 h-6 rounded-full border border-rose-gold/40 shadow-sm"
+                            className="w-6 h-6 rounded-full border border-white/60 shadow-sm"
                             style={{ backgroundColor: themeOption.carpetColor }}
                             title="Carpet"
                           />
                           <div
-                            className="w-6 h-6 rounded-full border border-rose-gold/40 shadow-sm"
+                            className="w-6 h-6 rounded-full border border-white/60 shadow-sm"
                             style={{ backgroundColor: themeOption.frameColor }}
                             title="Frames"
                           />
@@ -212,7 +212,7 @@ export default function CuratorStudioModal({
                 <h3 className="text-lg font-cinzel font-bold text-berry-rose">
                   {localMemories[activeTab]?.title}
                 </h3>
-                <p className="text-xs text-rose-gold-rich font-serif">
+                <p className="text-xs text-rose-gold-dark font-serif font-semibold">
                   {localMemories[activeTab]?.description}
                 </p>
               </div>
@@ -221,17 +221,17 @@ export default function CuratorStudioModal({
                 {localMemories[activeTab]?.frames.map((frame) => (
                   <div
                     key={frame.id}
-                    className="p-4 rounded-2xl bg-white/80 border border-rose-gold/40 space-y-4 shadow-sm"
+                    className="p-4 rounded-2xl bg-white/30 backdrop-blur-md border border-white/50 space-y-4 shadow-sm"
                   >
                     {/* Image Upload & Preview */}
                     <div className="flex items-center gap-4">
-                      <div className="w-24 h-24 rounded-xl overflow-hidden border-2 border-rose-gold/60 bg-pink-50 flex-shrink-0 relative group shadow-sm">
+                      <div className="w-24 h-24 rounded-xl overflow-hidden border-2 border-white/60 bg-white/30 flex-shrink-0 relative group shadow-sm">
                         <img
                           src={frame.image}
                           alt={frame.title}
                           className="w-full h-full object-cover"
                         />
-                        <label className="absolute inset-0 bg-pink-900/50 opacity-0 group-hover:opacity-100 flex items-center justify-center cursor-pointer transition-opacity">
+                        <label className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center cursor-pointer transition-opacity">
                           <Upload className="w-5 h-5 text-white" />
                           <input
                             type="file"
@@ -246,8 +246,8 @@ export default function CuratorStudioModal({
                         <label className="block text-xs font-cinzel text-berry-rose font-bold">
                           Upload Custom Photo
                         </label>
-                        <label className="inline-flex items-center gap-2 px-3 py-2 bg-strawberry-cream hover:bg-pink-100 border border-rose-gold/40 rounded-xl text-xs font-cinzel text-berry-rose cursor-pointer transition-all shadow-sm">
-                          <Upload className="w-3.5 h-3.5 text-rose-gold-rich" />
+                        <label className="inline-flex items-center gap-2 px-3 py-2 bg-white/40 hover:bg-white/70 border border-white/50 rounded-xl text-xs font-cinzel text-berry-rose cursor-pointer transition-all shadow-sm backdrop-blur-sm">
+                          <Upload className="w-3.5 h-3.5 text-rose-gold-dark" />
                           <span>Choose File</span>
                           <input
                             type="file"
@@ -261,7 +261,7 @@ export default function CuratorStudioModal({
                           placeholder="Or paste image URL"
                           value={frame.image.startsWith('data:') ? 'Custom uploaded file' : frame.image}
                           onChange={(e) => handleFrameChange(activeTab, frame.id, 'image', e.target.value)}
-                          className="w-full bg-white border border-rose-gold/30 rounded-lg px-2.5 py-1 text-xs text-berry-rose focus:outline-none focus:border-rose-gold"
+                          className="w-full bg-white/40 border border-white/40 rounded-lg px-2.5 py-1 text-xs text-berry-rose focus:outline-none focus:bg-white/70 focus:border-rose-gold placeholder-berry-rose/50"
                         />
                       </div>
                     </div>
@@ -269,50 +269,50 @@ export default function CuratorStudioModal({
                     {/* Text Inputs */}
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className="block text-xs font-cinzel text-berry-rose/80 mb-1 font-bold">
+                        <label className="block text-xs font-cinzel text-berry-rose/90 mb-1 font-bold">
                           Artwork Title
                         </label>
                         <input
                           type="text"
                           value={frame.title}
                           onChange={(e) => handleFrameChange(activeTab, frame.id, 'title', e.target.value)}
-                          className="w-full bg-white border border-rose-gold/30 rounded-lg px-3 py-1.5 text-xs text-berry-rose focus:outline-none focus:border-rose-gold"
+                          className="w-full bg-white/40 border border-white/40 rounded-lg px-3 py-1.5 text-xs text-berry-rose focus:outline-none focus:bg-white/70 focus:border-rose-gold"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-cinzel text-berry-rose/80 mb-1 font-bold">
+                        <label className="block text-xs font-cinzel text-berry-rose/90 mb-1 font-bold">
                           Date / Occasion
                         </label>
                         <input
                           type="text"
                           value={frame.date}
                           onChange={(e) => handleFrameChange(activeTab, frame.id, 'date', e.target.value)}
-                          className="w-full bg-white border border-rose-gold/30 rounded-lg px-3 py-1.5 text-xs text-berry-rose focus:outline-none focus:border-rose-gold"
+                          className="w-full bg-white/40 border border-white/40 rounded-lg px-3 py-1.5 text-xs text-berry-rose focus:outline-none focus:bg-white/70 focus:border-rose-gold"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-xs font-cinzel text-berry-rose/80 mb-1 font-bold">
+                      <label className="block text-xs font-cinzel text-berry-rose/90 mb-1 font-bold">
                         Location / Tag
                       </label>
                       <input
                         type="text"
                         value={frame.location || ''}
                         onChange={(e) => handleFrameChange(activeTab, frame.id, 'location', e.target.value)}
-                        className="w-full bg-white border border-rose-gold/30 rounded-lg px-3 py-1.5 text-xs text-berry-rose focus:outline-none focus:border-rose-gold"
+                        className="w-full bg-white/40 border border-white/40 rounded-lg px-3 py-1.5 text-xs text-berry-rose focus:outline-none focus:bg-white/70 focus:border-rose-gold"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-cinzel text-berry-rose/80 mb-1 font-bold">
+                      <label className="block text-xs font-cinzel text-berry-rose/90 mb-1 font-bold">
                         Curator's Memory Story
                       </label>
                       <textarea
                         rows={2}
                         value={frame.story}
                         onChange={(e) => handleFrameChange(activeTab, frame.id, 'story', e.target.value)}
-                        className="w-full bg-white border border-rose-gold/30 rounded-lg px-3 py-1.5 text-xs text-berry-rose font-serif focus:outline-none focus:border-rose-gold"
+                        className="w-full bg-white/40 border border-white/40 rounded-lg px-3 py-1.5 text-xs text-berry-rose font-serif focus:outline-none focus:bg-white/70 focus:border-rose-gold"
                       />
                     </div>
                   </div>
@@ -323,10 +323,10 @@ export default function CuratorStudioModal({
         </div>
 
         {/* Footer Buttons */}
-        <div className="p-5 border-t border-rose-gold/30 bg-strawberry-cream/70 flex items-center justify-between">
+        <div className="p-5 border-t border-white/30 bg-white/20 flex items-center justify-between">
           <button
             onClick={onResetDefaults}
-            className="flex items-center gap-2 px-4 py-2.5 bg-white/80 hover:bg-white text-berry-rose/80 hover:text-berry-rose border border-rose-gold/30 rounded-xl text-xs font-cinzel transition-all shadow-sm"
+            className="flex items-center gap-2 px-4 py-2.5 bg-white/30 hover:bg-white/60 text-berry-rose border border-white/40 rounded-xl text-xs font-cinzel transition-all shadow-sm backdrop-blur-sm"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             <span>Reset Demo Data</span>
@@ -341,7 +341,7 @@ export default function CuratorStudioModal({
             </button>
             <button
               onClick={handleSave}
-              className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-pastel-pink to-rose-gold-light text-berry-rose font-cinzel font-bold text-sm rounded-xl shadow-rose-glow hover:scale-105 active:scale-95 transition-all border border-rose-gold/40"
+              className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-white/60 to-pastel-pink/60 text-berry-rose font-cinzel font-bold text-sm rounded-xl shadow-md hover:scale-105 active:scale-95 transition-all border border-white/60 backdrop-blur-md"
             >
               {showSavedToast ? <Check className="w-4 h-4" /> : <Save className="w-4 h-4" />}
               <span>{showSavedToast ? 'Saved!' : 'Save Exhibition'}</span>

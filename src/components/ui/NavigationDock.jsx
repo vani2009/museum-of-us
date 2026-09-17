@@ -38,8 +38,8 @@ export default function NavigationDock({
 
   return (
     <div className="absolute bottom-5 inset-x-0 mx-auto max-w-5xl px-4 pointer-events-none z-20 flex flex-col sm:flex-row items-center justify-between gap-3">
-      {/* Wall Navigation Dock - Frosted Strawberry Glass */}
-      <div className="pointer-events-auto bg-white/75 backdrop-blur-xl border border-rose-gold/40 p-1.5 rounded-2xl flex items-center gap-1 overflow-x-auto max-w-full shadow-lg">
+      {/* Wall Navigation Dock - Transparent Crystal Glass */}
+      <div className="pointer-events-auto bg-white/35 backdrop-blur-xl border border-white/60 p-1.5 rounded-2xl flex items-center gap-1 overflow-x-auto max-w-full shadow-2xl">
         {walls.map((w) => {
           const Icon = w.icon;
           const isActive = focusedWall === w.id;
@@ -47,10 +47,10 @@ export default function NavigationDock({
             <button
               key={w.id}
               onClick={() => onSelectWall(w.id)}
-              className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-cinzel transition-all flex items-center gap-1.5 whitespace-nowrap ${
+              className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-cinzel transition-all flex items-center gap-1.5 whitespace-nowrap backdrop-blur-sm ${
                 isActive
-                  ? 'bg-gradient-to-r from-pastel-pink to-rose-gold-light text-berry-rose border border-rose-gold/50 font-bold shadow-sm'
-                  : 'text-berry-rose/70 hover:text-berry-rose hover:bg-white/50'
+                  ? 'bg-white/60 text-berry-rose border border-white/70 font-bold shadow-md'
+                  : 'text-berry-rose/75 hover:text-berry-rose hover:bg-white/35'
               }`}
             >
               <Icon className="w-3.5 h-3.5" />
@@ -60,41 +60,41 @@ export default function NavigationDock({
         })}
       </div>
 
-      {/* Action Tools & Controls - Frosted Strawberry Glass */}
-      <div className="pointer-events-auto bg-white/75 backdrop-blur-xl border border-rose-gold/40 p-1.5 rounded-2xl flex items-center gap-1 shadow-lg">
+      {/* Action Tools & Controls - Transparent Crystal Glass */}
+      <div className="pointer-events-auto bg-white/35 backdrop-blur-xl border border-white/60 p-1.5 rounded-2xl flex items-center gap-1 shadow-2xl">
         {/* Curator Studio */}
         <button
           onClick={onOpenStudio}
-          className="p-2.5 rounded-xl text-berry-rose/80 hover:text-berry-rose hover:bg-white/60 transition-all flex items-center gap-1.5 text-xs font-cinzel font-semibold"
+          className="p-2.5 rounded-xl text-berry-rose/85 hover:text-berry-rose hover:bg-white/40 transition-all flex items-center gap-1.5 text-xs font-cinzel font-semibold"
           title="Curator Studio: Upload Photos & Custom Colors"
         >
-          <Palette className="w-4 h-4 text-frosted-rose" />
+          <Palette className="w-4 h-4 text-rose-gold-dark" />
           <span className="hidden md:inline">Curator Studio</span>
         </button>
 
         {/* Gauri & Vani Mini Barbie Customizer */}
         <button
           onClick={onOpenLegoCustomizer}
-          className="p-2.5 rounded-xl text-berry-rose/80 hover:text-berry-rose hover:bg-white/60 transition-all flex items-center gap-1.5 text-xs font-cinzel font-semibold"
+          className="p-2.5 rounded-xl text-berry-rose/85 hover:text-berry-rose hover:bg-white/40 transition-all flex items-center gap-1.5 text-xs font-cinzel font-semibold"
           title="Customize Gauri & Vani Mini Barbie Avatars"
         >
-          <Users className="w-4 h-4 text-rose-gold-rich" />
+          <Users className="w-4 h-4 text-rose-gold-dark" />
           <span className="hidden md:inline">Gauri & Vani</span>
         </button>
 
         {/* Polaroid Snapshot */}
         <button
           onClick={onTakeSnapshot}
-          className="p-2.5 rounded-xl text-berry-rose/80 hover:text-berry-rose hover:bg-white/60 transition-all"
+          className="p-2.5 rounded-xl text-berry-rose/85 hover:text-berry-rose hover:bg-white/40 transition-all"
           title="Take a Polaroid Keepsake"
         >
-          <Camera className="w-4 h-4" />
+          <Camera className="w-4 h-4 text-rose-gold-dark" />
         </button>
 
         {/* Lighting Mode */}
         <button
           onClick={onToggleLighting}
-          className="p-2.5 rounded-xl text-berry-rose/80 hover:text-berry-rose hover:bg-white/60 transition-all"
+          className="p-2.5 rounded-xl text-berry-rose/85 hover:text-berry-rose hover:bg-white/40 transition-all"
           title={lightingMode === 'cozy' ? "Switch to Bright Mode" : "Switch to Cozy Mode"}
         >
           {lightingMode === 'cozy' ? <Sun className="w-4 h-4 text-champagne-gold" /> : <Moon className="w-4 h-4 text-pastel-lavender" />}
@@ -103,16 +103,16 @@ export default function NavigationDock({
         {/* Audio Toggle */}
         <button
           onClick={onToggleAudio}
-          className="p-2.5 rounded-xl text-berry-rose/80 hover:text-berry-rose hover:bg-white/60 transition-all"
+          className="p-2.5 rounded-xl text-berry-rose/85 hover:text-berry-rose hover:bg-white/40 transition-all"
           title={audioPlaying ? "Mute Music" : "Play Birthday Music"}
         >
-          {audioPlaying ? <Volume2 className="w-4 h-4 text-rose-gold-rich animate-pulse" /> : <VolumeX className="w-4 h-4 text-berry-rose/40" />}
+          {audioPlaying ? <Volume2 className="w-4 h-4 text-rose-gold-dark animate-pulse" /> : <VolumeX className="w-4 h-4 text-berry-rose/50" />}
         </button>
 
         {/* Exit to Gates */}
         <button
           onClick={onExitToEntrance}
-          className="p-2.5 rounded-xl text-berry-rose/70 hover:text-berry-rose hover:bg-white/60 transition-all"
+          className="p-2.5 rounded-xl text-berry-rose/75 hover:text-berry-rose hover:bg-white/40 transition-all"
           title="Return to Entrance Gates"
         >
           <DoorClosed className="w-4 h-4" />

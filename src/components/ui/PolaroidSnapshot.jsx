@@ -41,14 +41,14 @@ export default function PolaroidSnapshot({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-berry-rose/40 backdrop-blur-md animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/20 backdrop-blur-sm animate-fadeIn">
       <div className="absolute inset-0" onClick={onClose} />
 
-      {/* Main Frosted Glass Card */}
-      <div className="relative z-10 max-w-md w-full bg-white/90 backdrop-blur-2xl border-2 border-rose-gold/60 rounded-3xl p-6 shadow-strawberry flex flex-col items-center">
+      {/* Main Transparent Glass Card */}
+      <div className="relative z-10 max-w-md w-full bg-white/35 backdrop-blur-2xl border border-white/60 rounded-3xl p-6 shadow-2xl flex flex-col items-center">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 bg-white/60 hover:bg-white/90 text-berry-rose rounded-full border border-rose-gold/40 transition-all hover:scale-110"
+          className="absolute top-4 right-4 p-2 bg-white/40 hover:bg-white/70 text-berry-rose rounded-full border border-white/50 transition-all hover:scale-110 shadow-md backdrop-blur-md"
         >
           <X className="w-5 h-5" />
         </button>
@@ -56,13 +56,13 @@ export default function PolaroidSnapshot({
         <h3 className="text-xl font-cinzel font-bold text-berry-rose mb-1">
           Birthday Keepsake Polaroid
         </h3>
-        <p className="text-xs text-berry-rose/70 font-serif mb-6">
+        <p className="text-xs text-berry-rose/75 font-serif mb-6">
           A timeless souvenir of Gauri's 3D Birthday Museum
         </p>
 
         {/* Vintage Polaroid Card Frame */}
-        <div className="bg-white p-4 pb-6 rounded-2xl shadow-strawberry border-4 border-strawberry-cream w-full max-w-sm flex flex-col items-center">
-          <div className="w-full aspect-[4/3] bg-strawberry-cream/40 rounded-xl overflow-hidden border border-rose-gold/40 mb-4 flex items-center justify-center">
+        <div className="bg-white/95 p-4 pb-6 rounded-2xl shadow-xl border-4 border-white w-full max-w-sm flex flex-col items-center">
+          <div className="w-full aspect-[4/3] bg-strawberry-cream/40 rounded-xl overflow-hidden border border-rose-gold/30 mb-4 flex items-center justify-center">
             {snapshotUrl ? (
               <img src={snapshotUrl} alt="Museum snapshot" className="w-full h-full object-cover" />
             ) : (
@@ -74,7 +74,7 @@ export default function PolaroidSnapshot({
             <h4 className="font-script text-2xl text-berry-rose font-bold">
               {friend1Name} & {friend2Name} 🎂
             </h4>
-            <p className="text-[10px] font-cinzel text-berry-rose/80 tracking-widest uppercase">
+            <p className="text-[10px] font-cinzel text-berry-rose/80 tracking-widest uppercase font-semibold">
               {museumTitle} • Birthday Edition
             </p>
           </div>
@@ -84,9 +84,9 @@ export default function PolaroidSnapshot({
         <div className="mt-6 w-full flex items-center justify-center gap-3">
           <button
             onClick={handleDownload}
-            className="flex-1 flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-rose-gold to-pastel-pink text-berry-rose font-cinzel font-bold text-sm rounded-xl shadow-soft-pink hover:scale-105 active:scale-95 transition-all border border-rose-gold/40"
+            className="flex-1 flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-white/60 to-pastel-pink/60 text-berry-rose font-cinzel font-bold text-sm rounded-xl shadow-md hover:scale-105 active:scale-95 transition-all border border-white/60 backdrop-blur-md"
           >
-            <Download className="w-4 h-4" />
+            <Download className="w-4 h-4 text-rose-gold-dark" />
             <span>Download Keepsake</span>
           </button>
         </div>

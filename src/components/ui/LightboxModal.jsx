@@ -33,26 +33,26 @@ export default function LightboxModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-pink-900/30 backdrop-blur-md animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/20 backdrop-blur-sm animate-fadeIn">
       {/* Click outside to close */}
       <div className="absolute inset-0" onClick={onClose} />
 
-      {/* Main Lightbox Glass Card */}
-      <div className="relative z-10 max-w-4xl w-full bg-white/90 backdrop-blur-2xl border-2 border-rose-gold/60 rounded-3xl overflow-hidden shadow-pink-glow flex flex-col md:flex-row max-h-[90vh]">
+      {/* Main Transparent Lightbox Glass Card */}
+      <div className="relative z-10 max-w-4xl w-full bg-white/35 backdrop-blur-2xl border border-white/60 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-20 p-2 bg-white/80 hover:bg-white text-berry-rose rounded-full border border-rose-gold/40 hover:scale-110 transition-all shadow-sm"
+          className="absolute top-4 right-4 z-20 p-2 bg-white/40 hover:bg-white/70 text-berry-rose rounded-full border border-white/50 hover:scale-110 transition-all shadow-md backdrop-blur-md"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Left Side: Artwork Image in Rose Gold Frame */}
-        <div className="md:w-1/2 p-6 sm:p-8 flex items-center justify-center bg-strawberry-cream/50 relative">
+        <div className="md:w-1/2 p-6 sm:p-8 flex items-center justify-center bg-white/20 backdrop-blur-md border-b md:border-b-0 md:border-r border-white/30 relative">
           {/* Navigation Arrows */}
           <button
             onClick={() => onNavigateFrame(prevFrame)}
-            className="absolute left-2 top-1/2 -translate-y-1/2 p-2.5 bg-white/80 hover:bg-white text-berry-rose rounded-full border border-rose-gold/40 transition-all hover:scale-110 shadow-sm"
+            className="absolute left-2 top-1/2 -translate-y-1/2 p-2.5 bg-white/40 hover:bg-white/70 text-berry-rose rounded-full border border-white/50 transition-all hover:scale-110 shadow-md backdrop-blur-md"
             title="Previous Memory"
           >
             <ChevronLeft className="w-5 h-5" />
@@ -60,15 +60,15 @@ export default function LightboxModal({
 
           <button
             onClick={() => onNavigateFrame(nextFrame)}
-            className="absolute right-2 top-1/2 -translate-y-1/2 p-2.5 bg-white/80 hover:bg-white text-berry-rose rounded-full border border-rose-gold/40 transition-all hover:scale-110 shadow-sm"
+            className="absolute right-2 top-1/2 -translate-y-1/2 p-2.5 bg-white/40 hover:bg-white/70 text-berry-rose rounded-full border border-white/50 transition-all hover:scale-110 shadow-md backdrop-blur-md"
             title="Next Memory"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
 
           {/* Rose Gold Picture Frame Container */}
-          <div className="relative p-3 bg-gradient-to-tr from-rose-gold-rich via-rose-gold-light to-pastel-pink rounded-2xl shadow-rose-glow max-w-full">
-            <div className="p-1 bg-white rounded-xl">
+          <div className="relative p-3 bg-gradient-to-tr from-rose-gold-rich/80 via-rose-gold-light/90 to-pastel-pink/80 rounded-2xl shadow-rose-glow max-w-full backdrop-blur-sm border border-white/40">
+            <div className="p-1 bg-white/90 rounded-xl">
               <img
                 src={frame.image}
                 alt={frame.title}
@@ -79,43 +79,43 @@ export default function LightboxModal({
         </div>
 
         {/* Right Side: Museum Placard & Story */}
-        <div className="md:w-1/2 p-6 sm:p-8 flex flex-col justify-between overflow-y-auto">
+        <div className="md:w-1/2 p-6 sm:p-8 flex flex-col justify-between overflow-y-auto bg-white/15">
           <div>
             {/* Museum Exhibition Tag */}
             <div className="flex items-center gap-2 mb-3">
-              <span className="px-3 py-1 bg-strawberry-cream border border-rose-gold/40 text-berry-rose rounded-full text-xs font-cinzel font-bold tracking-wider uppercase">
+              <span className="px-3 py-1 bg-white/40 backdrop-blur-md border border-white/50 text-berry-rose rounded-full text-xs font-cinzel font-bold tracking-wider uppercase shadow-sm">
                 {frame.id.split('-')[0].toUpperCase()} WALL EXHIBIT
               </span>
-              <span className="text-xs text-rose-gold-rich font-cinzel">
+              <span className="text-xs text-berry-rose/80 font-cinzel font-semibold">
                 Shape: {frame.shape.toUpperCase()}
               </span>
             </div>
 
             {/* Title */}
-            <h2 className="text-2xl sm:text-3xl font-cinzel font-bold text-berry-rose mb-2 leading-tight">
+            <h2 className="text-2xl sm:text-3xl font-cinzel font-bold text-berry-rose mb-2 leading-tight drop-shadow-sm">
               {frame.title}
             </h2>
 
             {/* Date & Location Badges */}
-            <div className="flex flex-wrap items-center gap-3 text-sm text-berry-rose/80 mb-6">
+            <div className="flex flex-wrap items-center gap-3 text-sm text-berry-rose/90 mb-6 font-medium">
               <div className="flex items-center gap-1.5">
-                <Calendar className="w-4 h-4 text-rose-gold-rich" />
+                <Calendar className="w-4 h-4 text-rose-gold-dark" />
                 <span>{frame.date}</span>
               </div>
               {frame.location && (
                 <div className="flex items-center gap-1.5">
-                  <MapPin className="w-4 h-4 text-rose-gold-rich" />
+                  <MapPin className="w-4 h-4 text-rose-gold-dark" />
                   <span>{frame.location}</span>
                 </div>
               )}
             </div>
 
-            <div className="h-px bg-gradient-to-r from-rose-gold via-rose-gold/20 to-transparent mb-6" />
+            <div className="h-px bg-gradient-to-r from-rose-gold/60 via-white/40 to-transparent mb-6" />
 
             {/* Memory Story */}
-            <div className="bg-strawberry-cream/70 border border-rose-gold/30 rounded-2xl p-4 sm:p-5 mb-6">
+            <div className="bg-white/30 backdrop-blur-md border border-white/50 rounded-2xl p-4 sm:p-5 mb-6 shadow-sm">
               <h4 className="text-xs font-cinzel text-berry-rose uppercase tracking-wider mb-2 flex items-center gap-1.5 font-bold">
-                <Sparkles className="w-3.5 h-3.5 text-rose-gold-rich" />
+                <Sparkles className="w-3.5 h-3.5 text-rose-gold-dark" />
                 Curator's Memory Note
               </h4>
               <p className="text-berry-rose font-serif text-base sm:text-lg italic leading-relaxed">
@@ -125,13 +125,13 @@ export default function LightboxModal({
           </div>
 
           {/* Bottom Actions: Like Counter & Edit Button */}
-          <div className="pt-4 border-t border-rose-gold/30 flex items-center justify-between gap-4">
+          <div className="pt-4 border-t border-white/30 flex items-center justify-between gap-4">
             <button
               onClick={handleLike}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all ${
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border backdrop-blur-md transition-all ${
                 hasLiked
-                  ? 'bg-pastel-pink text-berry-rose border-rose-gold font-bold shadow-sm'
-                  : 'bg-white/80 hover:bg-white text-berry-rose border-rose-gold/40 shadow-sm'
+                  ? 'bg-pastel-pink/70 text-berry-rose border-rose-gold font-bold shadow-md'
+                  : 'bg-white/40 hover:bg-white/60 text-berry-rose border-white/50 shadow-sm'
               }`}
             >
               <Heart className={`w-4 h-4 ${hasLiked ? 'fill-berry-rose text-berry-rose' : 'text-frosted-rose'}`} />
@@ -140,9 +140,9 @@ export default function LightboxModal({
 
             <button
               onClick={() => onEditFrame(frame)}
-              className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-pastel-pink to-rose-gold-light border border-rose-gold/50 text-berry-rose rounded-xl text-sm font-cinzel font-bold transition-all hover:scale-105 shadow-sm"
+              className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-white/60 to-pastel-pink/60 backdrop-blur-md border border-white/60 text-berry-rose rounded-xl text-sm font-cinzel font-bold transition-all hover:scale-105 shadow-md"
             >
-              <Edit3 className="w-4 h-4" />
+              <Edit3 className="w-4 h-4 text-rose-gold-dark" />
               <span>Personalize This Photo</span>
             </button>
           </div>
