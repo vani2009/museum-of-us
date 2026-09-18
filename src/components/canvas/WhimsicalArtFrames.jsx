@@ -54,11 +54,32 @@ function createArchShape(w = 0.8, h = 1.1) {
   return shape;
 }
 
+// Helper: Compute normalized [0, 1] UVs for any 2D ShapeGeometry
+function createNormalizedShapeGeometry(shape) {
+  const geom = new THREE.ShapeGeometry(shape, 32);
+  geom.computeBoundingBox();
+  const { min, max } = geom.boundingBox;
+  const rangeX = max.x - min.x || 1;
+  const rangeY = max.y - min.y || 1;
+  const pos = geom.attributes.position;
+  const uvs = [];
+  for (let i = 0; i < pos.count; i++) {
+    const x = pos.getX(i);
+    const y = pos.getY(i);
+    const u = (x - min.x) / rangeX;
+    const v = (y - min.y) / rangeY;
+    uvs.push(u, v);
+  }
+  geom.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+  geom.uvsNeedUpdate = true;
+  return geom;
+}
+
 // -------------------------------------------------------------
 // Whimsical Frame Base Wrapper
 // -------------------------------------------------------------
 function WhimsicalFrameWrapper({
-  frameType = 'wavy-baroque', // 'wavy-baroque' | 'rococo-heart' | 'arched-cathedral' | 'scalloped-round' | 'shield-crest'
+  frameType = 'wavy-baroque', // 'wavy-baroque' | 'rococo-heart' | 'arched-cathedral' | 'scalloped-round'
   imageUrl,
   title = "Whimsical Keepsake",
   subtitle = "Permanent Whimsical Collection",
@@ -70,6 +91,7 @@ function WhimsicalFrameWrapper({
 }) {
   const groupRef = useRef();
   const [hovered, setHovered] = useState(false);
+  const [artTexture, setArtTexture] = useState(null);
 
   // Procedural Materials
   const rococoTex = useMemo(() => createRococoFrameTexture('#FFD6DF', '#E8A598'), []);
@@ -108,22 +130,48 @@ function WhimsicalFrameWrapper({
     metalness: 0.1,
   }), [placardTex]);
 
-  // Load Art Image
-  const artTexture = useMemo(() => {
-    if (!imageUrl) return null;
+  // Robust texture loader with React state
+  useEffect(() => {
+    if (!imageUrl) {
+      setArtTexture(null);
+      return;
+    }
+    let active = true;
     const loader = new THREE.TextureLoader();
     loader.setCrossOrigin('anonymous');
-    return loader.load(imageUrl, (tex) => {
-      tex.colorSpace = THREE.SRGBColorSpace;
-    });
+    loader.load(
+      imageUrl,
+      (tex) => {
+        if (active) {
+          tex.colorSpace = THREE.SRGBColorSpace;
+          tex.generateMipmaps = true;
+          tex.minFilter = THREE.LinearMipmapLinearFilter;
+          tex.magFilter = THREE.LinearFilter;
+          tex.needsUpdate = true;
+          setArtTexture(tex);
+        }
+      },
+      undefined,
+      (err) => {
+        console.warn('Failed to load whimsical image texture:', imageUrl, err);
+      }
+    );
+    return () => {
+      active = false;
+    };
   }, [imageUrl]);
 
-  const pictureMat = useMemo(() => new THREE.MeshStandardMaterial({
-    map: artTexture,
+  const pictureMat = useMemo(() => new THREE.MeshBasicMaterial({
+    map: artTexture || null,
     color: artTexture ? '#FFFFFF' : '#FFF0F3',
-    roughness: 0.25,
-    metalness: 0.05,
+    toneMapped: false,
+    side: THREE.FrontSide,
   }), [artTexture]);
+
+  // Pre-calculated normalized shape geometries
+  const heartGeom = useMemo(() => createNormalizedShapeGeometry(createHeartShape(0.48)), []);
+  const archGeom = useMemo(() => createNormalizedShapeGeometry(createArchShape(0.72, 1.02)), []);
+  const wavyGeom = useMemo(() => createNormalizedShapeGeometry(createWavyRectShape(0.92, 0.74, 0.09)), []);
 
   // Hover animation
   useFrame((state, delta) => {
@@ -164,24 +212,22 @@ function WhimsicalFrameWrapper({
             <extrudeGeometry
               args={[
                 wavyShape,
-                { depth: 0.06, bevelEnabled: true, bevelThickness: 0.03, bevelSize: 0.04, bevelSegments: 3 }
+                { depth: 0.04, bevelEnabled: true, bevelThickness: 0.02, bevelSize: 0.025, bevelSegments: 3 }
               ]}
             />
           </mesh>
 
+          {/* Picture Plane with Normalized UVs */}
+          <mesh position={[0, 0, 0.065]} geometry={wavyGeom} material={pictureMat} castShadow />
+
           {/* Rose Gold Inner Bezel Ring */}
-          <mesh position={[0, 0, 0.065]} material={goldLeafMat}>
+          <mesh position={[0, 0, 0.068]} material={goldLeafMat}>
             <extrudeGeometry
               args={[
                 createWavyRectShape(w - 0.06, h - 0.06, 0.1),
-                { depth: 0.015, bevelEnabled: true, bevelThickness: 0.01, bevelSize: 0.01, bevelSegments: 2 }
+                { depth: 0.01, bevelEnabled: true, bevelThickness: 0.008, bevelSize: 0.008, bevelSegments: 2 }
               ]}
             />
-          </mesh>
-
-          {/* Picture Plane */}
-          <mesh position={[0, 0, 0.082]} material={pictureMat} castShadow>
-            <planeGeometry args={[w - 0.14, h - 0.14]} />
           </mesh>
 
           {/* 4 Corner Ornate Rose Florets with Pearls */}
@@ -191,16 +237,13 @@ function WhimsicalFrameWrapper({
             [-w / 2 + 0.02, -h / 2 + 0.02],
             [w / 2 - 0.02, -h / 2 + 0.02],
           ].map(([cx, cy], idx) => (
-            <group key={`rosette-${idx}`} position={[cx, cy, 0.09]}>
-              {/* Gold backing leaf */}
+            <group key={`rosette-${idx}`} position={[cx, cy, 0.08]}>
               <mesh material={goldLeafMat}>
                 <sphereGeometry args={[0.045, 8, 8]} scale={[1.2, 1, 0.4]} />
               </mesh>
-              {/* Pink Rose Bud */}
               <mesh position={[0, 0, 0.02]} material={roseMat}>
                 <sphereGeometry args={[0.03, 10, 10]} />
               </mesh>
-              {/* Center Pearl */}
               <mesh position={[0, 0, 0.04]} material={pearlMat}>
                 <sphereGeometry args={[0.015, 8, 8]} />
               </mesh>
@@ -233,37 +276,32 @@ function WhimsicalFrameWrapper({
             <extrudeGeometry
               args={[
                 heartShape,
-                { depth: 0.06, bevelEnabled: true, bevelThickness: 0.03, bevelSize: 0.04, bevelSegments: 3 }
+                { depth: 0.04, bevelEnabled: true, bevelThickness: 0.02, bevelSize: 0.025, bevelSegments: 3 }
               ]}
             />
           </mesh>
 
+          {/* Picture Plane with Normalized UVs */}
+          <mesh position={[0, 0, 0.065]} geometry={heartGeom} material={pictureMat} castShadow />
+
           {/* Gold Leaf Filigree Border */}
-          <mesh position={[0, 0, 0.065]} material={goldLeafMat}>
+          <mesh position={[0, 0, 0.068]} material={goldLeafMat}>
             <extrudeGeometry
               args={[
                 innerHeart,
-                { depth: 0.015, bevelEnabled: true, bevelThickness: 0.01, bevelSize: 0.01, bevelSegments: 2 }
+                { depth: 0.01, bevelEnabled: true, bevelThickness: 0.008, bevelSize: 0.008, bevelSegments: 2 }
               ]}
             />
-          </mesh>
-
-          {/* Picture Plane */}
-          <mesh position={[0, 0, 0.082]} material={pictureMat} castShadow>
-            <shapeGeometry args={[innerHeart]} />
           </mesh>
 
           {/* Baroque Crown Pearl Crest on Top */}
           <group position={[0, 0.52, 0.08]}>
-            {/* Shell Fan Finial */}
             <mesh material={goldLeafMat}>
               <coneGeometry args={[0.13, 0.16, 7]} rotation={[0, 0, Math.PI]} scale={[1.2, 1, 0.5]} />
             </mesh>
-            {/* Large Center Pearl */}
             <mesh position={[0, -0.02, 0.03]} material={pearlMat}>
               <sphereGeometry args={[0.04, 16, 16]} />
             </mesh>
-            {/* Flanking Small Pearls */}
             <mesh position={[-0.07, -0.04, 0.02]} material={pearlMat}>
               <sphereGeometry args={[0.022, 10, 10]} />
             </mesh>
@@ -301,24 +339,22 @@ function WhimsicalFrameWrapper({
             <extrudeGeometry
               args={[
                 archShape,
-                { depth: 0.06, bevelEnabled: true, bevelThickness: 0.03, bevelSize: 0.035, bevelSegments: 3 }
+                { depth: 0.04, bevelEnabled: true, bevelThickness: 0.02, bevelSize: 0.025, bevelSegments: 3 }
               ]}
             />
           </mesh>
 
+          {/* Picture Plane with Normalized UVs */}
+          <mesh position={[0, 0, 0.065]} geometry={archGeom} material={pictureMat} castShadow />
+
           {/* Rose Gold Inner Molding */}
-          <mesh position={[0, 0, 0.065]} material={goldLeafMat}>
+          <mesh position={[0, 0, 0.068]} material={goldLeafMat}>
             <extrudeGeometry
               args={[
                 innerArch,
-                { depth: 0.015, bevelEnabled: true, bevelThickness: 0.01, bevelSize: 0.01, bevelSegments: 2 }
+                { depth: 0.01, bevelEnabled: true, bevelThickness: 0.008, bevelSize: 0.008, bevelSegments: 2 }
               ]}
             />
-          </mesh>
-
-          {/* Picture Plane */}
-          <mesh position={[0, 0, 0.082]} material={pictureMat} castShadow>
-            <shapeGeometry args={[innerArch]} />
           </mesh>
 
           {/* Crown Baroque Shell Finial */}
