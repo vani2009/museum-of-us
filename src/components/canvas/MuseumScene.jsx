@@ -188,9 +188,9 @@ export default function MuseumScene({
 
         {/* 4-Wall Museum Room */}
         <GalleryRoom
-          wallColor={theme.wallColor}
-          trimColor={theme.wallTrim}
-          carpetColor={theme.carpetColor}
+          wallColor={theme?.wallColor || '#FFD1DC'}
+          trimColor={theme?.wallTrim || '#FFF8F6'}
+          carpetColor={theme?.carpetColor || '#F8A5C2'}
         >
           {/* Wall Picture Frames */}
           <WallFrames

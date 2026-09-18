@@ -10,7 +10,11 @@ export default function GalleryRoom({
   carpetColor = '#F8A5C2',
   children
 }) {
-  const wallTexture = useMemo(() => createStripedWallTexture(wallColor, '#FFFDFE'), [wallColor]);
+  const safeWallColor = wallColor || '#FFD1DC';
+  const safeTrimColor = trimColor || '#FFF8F6';
+  const safeCarpetColor = carpetColor || '#F8A5C2';
+
+  const wallTexture = useMemo(() => createStripedWallTexture(safeWallColor, '#FFFDFE'), [safeWallColor]);
   const floorTexture = useMemo(() => createHerringboneFloorTexture(), []);
   const trimTexture = useMemo(() => createStoneArchTexture(), []);
 
@@ -23,10 +27,10 @@ export default function GalleryRoom({
 
   const trimMat = useMemo(() => new THREE.MeshStandardMaterial({
     map: trimTexture,
-    color: trimColor,
+    color: safeTrimColor,
     roughness: 0.45,
     metalness: 0.08,
-  }), [trimTexture, trimColor]);
+  }), [trimTexture, safeTrimColor]);
 
   const floorMat = useMemo(() => new THREE.MeshStandardMaterial({
     map: floorTexture,

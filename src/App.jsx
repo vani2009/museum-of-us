@@ -30,21 +30,24 @@ export default function App() {
   const [targetFrameForEdit, setTargetFrameForEdit] = useState(null);
   const [activeDialogue, setActiveDialogue] = useState(null);
 
-  // Persistent Exhibition Data (Versioned to v3 to guarantee fresh festive defaults)
+  // Persistent Exhibition Data (Versioned to v4 to guarantee fresh festive defaults)
   const STORAGE_KEYS = {
-    memories: '3d_museum_v3_memories',
-    avatars: '3d_museum_v3_avatars',
-    theme: '3d_museum_v3_theme',
+    memories: '3d_museum_v4_memories',
+    avatars: '3d_museum_v4_avatars',
+    theme: '3d_museum_v4_theme',
   };
 
   useEffect(() => {
-    // Clear legacy unversioned caches
+    // Clear legacy caches to guarantee clean state
     try {
       localStorage.removeItem('3d_museum_memories');
       localStorage.removeItem('3d_museum_avatars');
       localStorage.removeItem('3d_museum_theme');
       localStorage.removeItem('3d_museum_memories_v2');
       localStorage.removeItem('3d_museum_theme_v2');
+      localStorage.removeItem('3d_museum_v3_memories');
+      localStorage.removeItem('3d_museum_v3_avatars');
+      localStorage.removeItem('3d_museum_v3_theme');
     } catch (e) {
       console.warn('Storage cleanup error:', e);
     }
@@ -53,7 +56,13 @@ export default function App() {
   const [wallMemories, setWallMemories] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEYS.memories);
-      return saved ? JSON.parse(saved) : DEFAULT_WALL_MEMORIES;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed && typeof parsed === 'object' && parsed.back && parsed.left && parsed.right) {
+          return parsed;
+        }
+      }
+      return DEFAULT_WALL_MEMORIES;
     } catch {
       return DEFAULT_WALL_MEMORIES;
     }
@@ -62,7 +71,13 @@ export default function App() {
   const [avatarData, setAvatarData] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEYS.avatars);
-      return saved ? JSON.parse(saved) : DEFAULT_AVATARS;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed && typeof parsed === 'object' && (parsed.gauri || parsed.friend1)) {
+          return parsed;
+        }
+      }
+      return DEFAULT_AVATARS;
     } catch {
       return DEFAULT_AVATARS;
     }
@@ -71,7 +86,16 @@ export default function App() {
   const [currentTheme, setCurrentTheme] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEYS.theme);
-      return saved ? JSON.parse(saved) : THEMES.birthdayCelebration;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed && typeof parsed === 'object' && parsed.wallColor) {
+          return parsed;
+        }
+        if (typeof parsed === 'string' && THEMES[parsed]) {
+          return THEMES[parsed];
+        }
+      }
+      return THEMES.birthdayCelebration;
     } catch {
       return THEMES.birthdayCelebration;
     }
@@ -79,8 +103,8 @@ export default function App() {
 
   const [museumMeta, setMuseumMeta] = useState(() => {
     return {
-      title: avatarData.museumTitle || "The Grand Birthday Museum of Us",
-      subtitle: avatarData.subtitle || "A Birthday Retrospective of Gauri & Vani 🎂✨",
+      title: avatarData?.museumTitle || "The Grand Birthday Museum of Us",
+      subtitle: avatarData?.subtitle || "A Birthday Retrospective of Gauri & Vani 🎂✨",
     };
   });
 
