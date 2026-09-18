@@ -30,10 +30,29 @@ export default function App() {
   const [targetFrameForEdit, setTargetFrameForEdit] = useState(null);
   const [activeDialogue, setActiveDialogue] = useState(null);
 
-  // Persistent Exhibition Data
+  // Persistent Exhibition Data (Versioned to v3 to guarantee fresh festive defaults)
+  const STORAGE_KEYS = {
+    memories: '3d_museum_v3_memories',
+    avatars: '3d_museum_v3_avatars',
+    theme: '3d_museum_v3_theme',
+  };
+
+  useEffect(() => {
+    // Clear legacy unversioned caches
+    try {
+      localStorage.removeItem('3d_museum_memories');
+      localStorage.removeItem('3d_museum_avatars');
+      localStorage.removeItem('3d_museum_theme');
+      localStorage.removeItem('3d_museum_memories_v2');
+      localStorage.removeItem('3d_museum_theme_v2');
+    } catch (e) {
+      console.warn('Storage cleanup error:', e);
+    }
+  }, []);
+
   const [wallMemories, setWallMemories] = useState(() => {
     try {
-      const saved = localStorage.getItem('3d_museum_memories');
+      const saved = localStorage.getItem(STORAGE_KEYS.memories);
       return saved ? JSON.parse(saved) : DEFAULT_WALL_MEMORIES;
     } catch {
       return DEFAULT_WALL_MEMORIES;
@@ -42,7 +61,7 @@ export default function App() {
 
   const [avatarData, setAvatarData] = useState(() => {
     try {
-      const saved = localStorage.getItem('3d_museum_avatars');
+      const saved = localStorage.getItem(STORAGE_KEYS.avatars);
       return saved ? JSON.parse(saved) : DEFAULT_AVATARS;
     } catch {
       return DEFAULT_AVATARS;
@@ -51,7 +70,7 @@ export default function App() {
 
   const [currentTheme, setCurrentTheme] = useState(() => {
     try {
-      const saved = localStorage.getItem('3d_museum_theme');
+      const saved = localStorage.getItem(STORAGE_KEYS.theme);
       return saved ? JSON.parse(saved) : THEMES.birthdayCelebration;
     } catch {
       return THEMES.birthdayCelebration;
@@ -60,8 +79,8 @@ export default function App() {
 
   const [museumMeta, setMuseumMeta] = useState(() => {
     return {
-      title: avatarData.museumTitle || "The Grand Museum of Us",
-      subtitle: avatarData.subtitle || "An Exhibition of Friendship & Adventures",
+      title: avatarData.museumTitle || "The Grand Birthday Museum of Us",
+      subtitle: avatarData.subtitle || "A Birthday Retrospective of Gauri & Vani 🎂✨",
     };
   });
 
@@ -135,7 +154,7 @@ export default function App() {
   const handleSaveMemories = (newMemories) => {
     setWallMemories(newMemories);
     try {
-      localStorage.setItem('3d_museum_memories', JSON.stringify(newMemories));
+      localStorage.setItem(STORAGE_KEYS.memories, JSON.stringify(newMemories));
     } catch (e) {
       console.warn('localStorage save failed:', e);
     }
@@ -144,7 +163,7 @@ export default function App() {
   const handleSaveAvatarData = (newAvatars) => {
     setAvatarData(newAvatars);
     try {
-      localStorage.setItem('3d_museum_avatars', JSON.stringify(newAvatars));
+      localStorage.setItem(STORAGE_KEYS.avatars, JSON.stringify(newAvatars));
     } catch (e) {
       console.warn('localStorage save failed:', e);
     }
@@ -153,7 +172,7 @@ export default function App() {
   const handleSelectTheme = (newTheme) => {
     setCurrentTheme(newTheme);
     try {
-      localStorage.setItem('3d_museum_theme', JSON.stringify(newTheme));
+      localStorage.setItem(STORAGE_KEYS.theme, JSON.stringify(newTheme));
     } catch (e) {
       console.warn('localStorage save failed:', e);
     }
@@ -176,9 +195,13 @@ export default function App() {
       title: DEFAULT_AVATARS.museumTitle,
       subtitle: DEFAULT_AVATARS.subtitle,
     });
-    localStorage.removeItem('3d_museum_memories');
-    localStorage.removeItem('3d_museum_avatars');
-    localStorage.removeItem('3d_museum_theme');
+    try {
+      localStorage.removeItem(STORAGE_KEYS.memories);
+      localStorage.removeItem(STORAGE_KEYS.avatars);
+      localStorage.removeItem(STORAGE_KEYS.theme);
+    } catch (e) {
+      console.warn('Storage reset error:', e);
+    }
     setIsStudioOpen(false);
   };
 
