@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { createGoldFiligreeTexture, createPlacardTexture, createPearlTexture, createRococoFrameTexture } from '../../utils/textureGenerators';
