@@ -27,14 +27,16 @@ function createWavyRectShape(w, h, r = 0.15) {
   return shape;
 }
 
-// Helper: Heart Shape
+// Helper: Heart Shape (Counter-Clockwise winding for correct +Z normal)
 function createHeartShape(s = 0.5) {
   const heartShape = new THREE.Shape();
   heartShape.moveTo(0, s * 0.35);
-  heartShape.bezierCurveTo(s * 0.1, s * 0.85, s * 0.8, s * 0.85, s * 0.8, s * 0.35);
-  heartShape.bezierCurveTo(s * 0.8, -0.05, s * 0.3, -s * 0.45, 0, -s * 0.75);
-  heartShape.bezierCurveTo(-s * 0.3, -s * 0.45, -s * 0.8, -0.05, -s * 0.8, s * 0.35);
-  heartShape.bezierCurveTo(-s * 0.8, s * 0.85, -s * 0.1, s * 0.85, 0, s * 0.35);
+  // Left lobe (CCW)
+  heartShape.bezierCurveTo(-s * 0.1, s * 0.85, -s * 0.8, s * 0.85, -s * 0.8, s * 0.35);
+  heartShape.bezierCurveTo(-s * 0.8, -0.05, -s * 0.3, -s * 0.45, 0, -s * 0.75);
+  // Right lobe (CCW)
+  heartShape.bezierCurveTo(s * 0.3, -s * 0.45, s * 0.8, -0.05, s * 0.8, s * 0.35);
+  heartShape.bezierCurveTo(s * 0.8, s * 0.85, s * 0.1, s * 0.85, 0, s * 0.35);
   return heartShape;
 }
 
@@ -70,8 +72,7 @@ function createNormalizedShapeGeometry(shape) {
     const v = (y - min.y) / rangeY;
     uvs.push(u, v);
   }
-  geom.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
-  geom.uvsNeedUpdate = true;
+  geom.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(uvs), 2));
   return geom;
 }
 
@@ -130,7 +131,7 @@ function WhimsicalFrameWrapper({
     metalness: 0.1,
   }), [placardTex]);
 
-  // Robust texture loader with React state
+  // Robust texture loader with React state and safe CORS handling
   useEffect(() => {
     if (!imageUrl) {
       setArtTexture(null);
@@ -138,14 +139,16 @@ function WhimsicalFrameWrapper({
     }
     let active = true;
     const loader = new THREE.TextureLoader();
-    loader.setCrossOrigin('anonymous');
+    if (!imageUrl.startsWith('data:') && !imageUrl.startsWith('blob:')) {
+      loader.setCrossOrigin('anonymous');
+    }
     loader.load(
       imageUrl,
       (tex) => {
         if (active) {
           tex.colorSpace = THREE.SRGBColorSpace;
           tex.generateMipmaps = true;
-          tex.minFilter = THREE.LinearMipmapLinearFilter;
+          tex.minFilter = THREE.LinearFilter;
           tex.magFilter = THREE.LinearFilter;
           tex.needsUpdate = true;
           setArtTexture(tex);
@@ -165,7 +168,7 @@ function WhimsicalFrameWrapper({
     map: artTexture || null,
     color: artTexture ? '#FFFFFF' : '#FFF0F3',
     toneMapped: false,
-    side: THREE.FrontSide,
+    side: THREE.DoubleSide,
   }), [artTexture]);
 
   // Pre-calculated normalized shape geometries
@@ -282,10 +285,10 @@ function WhimsicalFrameWrapper({
           </mesh>
 
           {/* Picture Plane with Normalized UVs */}
-          <mesh position={[0, 0, 0.065]} geometry={heartGeom} material={pictureMat} castShadow />
+          <mesh position={[0, 0, 0.075]} geometry={heartGeom} material={pictureMat} castShadow />
 
           {/* Gold Leaf Filigree Border */}
-          <mesh position={[0, 0, 0.068]} material={goldLeafMat}>
+          <mesh position={[0, 0, 0.078]} material={goldLeafMat}>
             <extrudeGeometry
               args={[
                 innerHeart,

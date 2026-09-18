@@ -27,14 +27,16 @@ function createWavyRectShape(w, h, r = 0.12) {
   return shape;
 }
 
-// Helper: Heart Shape
+// Helper: Heart Shape (Counter-Clockwise winding for correct +Z normal)
 function createHeartShape(s = 0.5) {
   const heartShape = new THREE.Shape();
   heartShape.moveTo(0, s * 0.35);
-  heartShape.bezierCurveTo(s * 0.1, s * 0.85, s * 0.8, s * 0.85, s * 0.8, s * 0.35);
-  heartShape.bezierCurveTo(s * 0.8, -0.05, s * 0.3, -s * 0.45, 0, -s * 0.75);
-  heartShape.bezierCurveTo(-s * 0.3, -s * 0.45, -s * 0.8, -0.05, -s * 0.8, s * 0.35);
-  heartShape.bezierCurveTo(-s * 0.8, s * 0.85, -s * 0.1, s * 0.85, 0, s * 0.35);
+  // Left lobe (CCW)
+  heartShape.bezierCurveTo(-s * 0.1, s * 0.85, -s * 0.8, s * 0.85, -s * 0.8, s * 0.35);
+  heartShape.bezierCurveTo(-s * 0.8, -0.05, -s * 0.3, -s * 0.45, 0, -s * 0.75);
+  // Right lobe (CCW)
+  heartShape.bezierCurveTo(s * 0.3, -s * 0.45, s * 0.8, -0.05, s * 0.8, s * 0.35);
+  heartShape.bezierCurveTo(s * 0.8, s * 0.85, s * 0.1, s * 0.85, 0, s * 0.35);
   return heartShape;
 }
 
@@ -70,8 +72,7 @@ function createNormalizedShapeGeometry(shape) {
     const v = (y - min.y) / rangeY;
     uvs.push(u, v);
   }
-  geom.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
-  geom.uvsNeedUpdate = true;
+  geom.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(uvs), 2));
   return geom;
 }
 
@@ -108,7 +109,7 @@ export default function OrnateFrame3D({
   const pearlTex = useMemo(() => createPearlTexture(), []);
   const placardTex = useMemo(() => createPlacardTexture(title, date), [title, date]);
 
-  // Robust image texture loading with React state
+  // Robust image texture loading with React state and safe CORS handling
   useEffect(() => {
     if (!image) {
       setLoadedTexture(null);
@@ -116,14 +117,16 @@ export default function OrnateFrame3D({
     }
     let isMounted = true;
     const loader = new THREE.TextureLoader();
-    loader.setCrossOrigin('anonymous');
+    if (!image.startsWith('data:') && !image.startsWith('blob:')) {
+      loader.setCrossOrigin('anonymous');
+    }
     loader.load(
       image,
       (tex) => {
         if (isMounted) {
           tex.colorSpace = THREE.SRGBColorSpace;
           tex.generateMipmaps = true;
-          tex.minFilter = THREE.LinearMipmapLinearFilter;
+          tex.minFilter = THREE.LinearFilter;
           tex.magFilter = THREE.LinearFilter;
           tex.needsUpdate = true;
           setLoadedTexture(tex);
@@ -167,12 +170,12 @@ export default function OrnateFrame3D({
     metalness: 0.1,
   }), []);
 
-  // Razor-sharp, bright & vibrant photo material (toneMapped: false ensures no darkening from room lighting)
+  // Razor-sharp, bright & vibrant photo material with DoubleSide visibility
   const pictureMaterial = useMemo(() => new THREE.MeshBasicMaterial({
     map: loadedTexture || null,
     color: loadedTexture ? '#FFFFFF' : '#FFD1DC',
     toneMapped: false,
-    side: THREE.FrontSide,
+    side: THREE.DoubleSide,
   }), [loadedTexture]);
 
   const placardMat = useMemo(() => new THREE.MeshStandardMaterial({
@@ -211,7 +214,7 @@ export default function OrnateFrame3D({
             <torusGeometry args={[rY - 0.04, 0.02, 12, 36]} scale={[rX / rY, 1, 1]} />
           </mesh>
           {/* Inner Picture Canvas */}
-          <mesh position={[0, 0, 0.025]} material={pictureMaterial} castShadow>
+          <mesh position={[0, 0, 0.028]} material={pictureMaterial} castShadow>
             <circleGeometry args={[rY - 0.02, 36]} scale={[rX / rY, 1, 1]} />
           </mesh>
           {/* Baroque Crown Shell Finial on Top */}
@@ -255,10 +258,10 @@ export default function OrnateFrame3D({
             />
           </mesh>
           {/* Picture Plane with Normalized UV Mapping (in front of base plate) */}
-          <mesh position={[0, 0, 0.065]} geometry={heartGeom} material={pictureMaterial} castShadow />
+          <mesh position={[0, 0, 0.075]} geometry={heartGeom} material={pictureMaterial} castShadow />
 
           {/* Rose Gold Bevel Inner Line framing photo */}
-          <mesh position={[0, 0, 0.068]} material={goldLeafMat}>
+          <mesh position={[0, 0, 0.078]} material={goldLeafMat}>
             <extrudeGeometry
               args={[
                 innerHeart,
