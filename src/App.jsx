@@ -30,11 +30,11 @@ export default function App() {
   const [targetFrameForEdit, setTargetFrameForEdit] = useState(null);
   const [activeDialogue, setActiveDialogue] = useState(null);
 
-  // Persistent Exhibition Data (Versioned to v4 to guarantee fresh festive defaults)
+  // Persistent Exhibition Data (Versioned to v5 to guarantee fresh festive user photo defaults)
   const STORAGE_KEYS = {
-    memories: '3d_museum_v4_memories',
-    avatars: '3d_museum_v4_avatars',
-    theme: '3d_museum_v4_theme',
+    memories: '3d_museum_v5_memories',
+    avatars: '3d_museum_v5_avatars',
+    theme: '3d_museum_v5_theme',
   };
 
   useEffect(() => {
@@ -48,6 +48,9 @@ export default function App() {
       localStorage.removeItem('3d_museum_v3_memories');
       localStorage.removeItem('3d_museum_v3_avatars');
       localStorage.removeItem('3d_museum_v3_theme');
+      localStorage.removeItem('3d_museum_v4_memories');
+      localStorage.removeItem('3d_museum_v4_avatars');
+      localStorage.removeItem('3d_museum_v4_theme');
     } catch (e) {
       console.warn('Storage cleanup error:', e);
     }

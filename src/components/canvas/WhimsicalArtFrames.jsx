@@ -298,18 +298,18 @@ function WhimsicalFrameWrapper({
           </mesh>
 
           {/* Baroque Crown Pearl Crest on Top */}
-          <group position={[0, 0.52, 0.08]}>
-            <mesh material={goldLeafMat}>
-              <coneGeometry args={[0.13, 0.16, 7]} rotation={[0, 0, Math.PI]} scale={[1.2, 1, 0.5]} />
+          <group position={[0, 0.48, 0.08]}>
+            <mesh position={[0, 0, 0.02]} material={roseMat}>
+              <sphereGeometry args={[0.035, 10, 10]} />
             </mesh>
-            <mesh position={[0, -0.02, 0.03]} material={pearlMat}>
-              <sphereGeometry args={[0.04, 16, 16]} />
+            <mesh position={[0, 0.03, 0.03]} material={pearlMat}>
+              <sphereGeometry args={[0.025, 12, 12]} />
             </mesh>
-            <mesh position={[-0.07, -0.04, 0.02]} material={pearlMat}>
-              <sphereGeometry args={[0.022, 10, 10]} />
+            <mesh position={[-0.05, -0.01, 0.02]} material={pearlMat}>
+              <sphereGeometry args={[0.02, 10, 10]} />
             </mesh>
-            <mesh position={[0.07, -0.04, 0.02]} material={pearlMat}>
-              <sphereGeometry args={[0.022, 10, 10]} />
+            <mesh position={[0.05, -0.01, 0.02]} material={pearlMat}>
+              <sphereGeometry args={[0.02, 10, 10]} />
             </mesh>
           </group>
 
@@ -360,13 +360,16 @@ function WhimsicalFrameWrapper({
             />
           </mesh>
 
-          {/* Crown Baroque Shell Finial */}
-          <group position={[0, 0.62, 0.08]}>
-            <mesh material={goldLeafMat}>
-              <coneGeometry args={[0.12, 0.15, 6]} rotation={[0, 0, Math.PI]} scale={[1.2, 1, 0.5]} />
+          {/* Crown Pearl Crest on Top */}
+          <group position={[0, 0.60, 0.08]}>
+            <mesh position={[0, 0, 0.02]} material={pearlMat}>
+              <sphereGeometry args={[0.038, 14, 14]} />
             </mesh>
-            <mesh position={[0, -0.03, 0.02]} material={pearlMat}>
-              <sphereGeometry args={[0.032, 12, 12]} />
+            <mesh position={[-0.045, -0.015, 0.015]} material={pearlMat}>
+              <sphereGeometry args={[0.02, 10, 10]} />
+            </mesh>
+            <mesh position={[0.045, -0.015, 0.015]} material={pearlMat}>
+              <sphereGeometry args={[0.02, 10, 10]} />
             </mesh>
           </group>
 
@@ -428,13 +431,16 @@ function WhimsicalFrameWrapper({
           );
         })}
 
-        {/* Top Ornate Baroque Crest */}
-        <group position={[0, radius + 0.16, 0.04]}>
-          <mesh material={goldLeafMat}>
-            <coneGeometry args={[0.12, 0.14, 6]} rotation={[0, 0, Math.PI]} scale={[1.3, 1, 0.5]} />
+        {/* Top Ornate Pearl Crest */}
+        <group position={[0, radius + 0.12, 0.04]}>
+          <mesh position={[0, 0, 0.02]} material={pearlMat}>
+            <sphereGeometry args={[0.035, 12, 12]} />
           </mesh>
-          <mesh position={[0, -0.02, 0.02]} material={pearlMat}>
-            <sphereGeometry args={[0.03, 12, 12]} />
+          <mesh position={[-0.04, -0.015, 0.015]} material={pearlMat}>
+            <sphereGeometry args={[0.018, 10, 10]} />
+          </mesh>
+          <mesh position={[0.04, -0.015, 0.015]} material={pearlMat}>
+            <sphereGeometry args={[0.018, 10, 10]} />
           </mesh>
         </group>
       </group>
@@ -456,15 +462,8 @@ function WhimsicalFrameWrapper({
       }}
       onClick={handleClick}
     >
-      {/* 3D Whimsical Rococo Frame and Art */}
+      {/* 3D Whimsical Rococo Frame and Art (Clean without placards) */}
       {renderFrameBody()}
-
-      {/* Dainty Placard */}
-      <group position={[0, -0.72, 0.02]}>
-        <mesh material={placardMat} castShadow>
-          <boxGeometry args={[0.74, 0.2, 0.015]} />
-        </mesh>
-      </group>
     </group>
   );
 }

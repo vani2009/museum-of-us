@@ -217,13 +217,16 @@ export default function OrnateFrame3D({
           <mesh position={[0, 0, 0.028]} material={pictureMaterial} castShadow>
             <circleGeometry args={[rY - 0.02, 36]} scale={[rX / rY, 1, 1]} />
           </mesh>
-          {/* Baroque Crown Shell Finial on Top */}
-          <group position={[0, rY + 0.1, 0.03]}>
-            <mesh material={goldLeafMat}>
-              <coneGeometry args={[0.13, 0.16, 7]} rotation={[0, 0, Math.PI]} scale={[1.2, 1, 0.5]} />
+          {/* Baroque Pearl Crest on Top (no dark cones) */}
+          <group position={[0, rY + 0.08, 0.03]}>
+            <mesh position={[0, 0, 0.02]} material={pearlMaterial}>
+              <sphereGeometry args={[0.038, 14, 14]} />
             </mesh>
-            <mesh position={[0, -0.02, 0.03]} material={pearlMaterial}>
-              <sphereGeometry args={[0.035, 14, 14]} />
+            <mesh position={[-0.05, -0.015, 0.015]} material={pearlMaterial}>
+              <sphereGeometry args={[0.02, 10, 10]} />
+            </mesh>
+            <mesh position={[0.05, -0.015, 0.015]} material={pearlMaterial}>
+              <sphereGeometry args={[0.02, 10, 10]} />
             </mesh>
           </group>
           {/* Side Rosebud & Pearl Clusters */}
@@ -270,13 +273,19 @@ export default function OrnateFrame3D({
             />
           </mesh>
 
-          {/* Top Baroque Crown Crest with Pearl */}
-          <group position={[0, 0.5, 0.08]}>
-            <mesh material={goldLeafMat}>
-              <coneGeometry args={[0.12, 0.15, 6]} rotation={[0, 0, Math.PI]} scale={[1.2, 1, 0.5]} />
+          {/* Top Baroque Pearl & Rose Crest (no dark cones) */}
+          <group position={[0, 0.48, 0.08]}>
+            <mesh position={[0, 0, 0.02]} material={roseMat}>
+              <sphereGeometry args={[0.035, 10, 10]} />
             </mesh>
-            <mesh position={[0, -0.02, 0.025]} material={pearlMaterial}>
-              <sphereGeometry args={[0.038, 14, 14]} />
+            <mesh position={[0, 0.03, 0.03]} material={pearlMaterial}>
+              <sphereGeometry args={[0.025, 12, 12]} />
+            </mesh>
+            <mesh position={[-0.05, -0.01, 0.02]} material={pearlMaterial}>
+              <sphereGeometry args={[0.02, 10, 10]} />
+            </mesh>
+            <mesh position={[0.05, -0.01, 0.02]} material={pearlMaterial}>
+              <sphereGeometry args={[0.02, 10, 10]} />
             </mesh>
           </group>
 
@@ -328,13 +337,16 @@ export default function OrnateFrame3D({
             />
           </mesh>
 
-          {/* Crown Shell Finial */}
-          <group position={[0, height / 2 + 0.04, 0.08]}>
-            <mesh material={goldLeafMat}>
-              <coneGeometry args={[0.11, 0.14, 6]} rotation={[0, 0, Math.PI]} scale={[1.2, 1, 0.5]} />
+          {/* Crown Pearl Crest on Top (no dark cones) */}
+          <group position={[0, height / 2 + 0.03, 0.08]}>
+            <mesh position={[0, 0, 0.02]} material={pearlMaterial}>
+              <sphereGeometry args={[0.035, 12, 12]} />
             </mesh>
-            <mesh position={[0, -0.02, 0.02]} material={pearlMaterial}>
-              <sphereGeometry args={[0.028, 10, 10]} />
+            <mesh position={[-0.045, -0.015, 0.015]} material={pearlMaterial}>
+              <sphereGeometry args={[0.02, 10, 10]} />
+            </mesh>
+            <mesh position={[0.045, -0.015, 0.015]} material={pearlMaterial}>
+              <sphereGeometry args={[0.02, 10, 10]} />
             </mesh>
           </group>
         </group>
@@ -440,8 +452,6 @@ export default function OrnateFrame3D({
     );
   };
 
-  const placardY = -height * 0.5 - 0.2;
-
   return (
     <group
       ref={groupRef}
@@ -459,17 +469,8 @@ export default function OrnateFrame3D({
         onSelectFrame?.(frameData);
       } : undefined}
     >
-      {/* 3D Whimsical Pastel Pink Rococo Frame and Photo */}
+      {/* 3D Whimsical Pastel Pink Rococo Frame and Photo (Clean without placards) */}
       {renderFrameGeometry()}
-
-      {/* Dainty Museum Placard */}
-      {isInteractive && (
-        <group position={[0, placardY, 0.02]}>
-          <mesh material={placardMat} castShadow>
-            <boxGeometry args={[0.7, 0.19, 0.015]} />
-          </mesh>
-        </group>
-      )}
     </group>
   );
 }
